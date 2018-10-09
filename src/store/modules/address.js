@@ -12,7 +12,7 @@ const mutations = {
 }
 
 const actions = {
-	setNavoffsetTop( {commit, state }, msg ) {
+	setNavoffsetTop( { commit, state }, msg ) {
         commit( 'error', msg )
     }
 }

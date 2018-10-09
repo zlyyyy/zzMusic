@@ -12,7 +12,7 @@ export default new Router({
             name: 'Home',
             component: Home,
             meta: {
-                title: '浙江公安全息搜索-手机号码'
+                title: 'ZZ-music'
             }
         }
     ]

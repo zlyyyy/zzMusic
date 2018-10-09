@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex'
 
 export default {
 	props: {
@@ -15,46 +15,21 @@ export default {
 		}
 	},
 	created() {},
-		components: {},
+	components: {},
 	computed: {
 		...mapState({
 			peopleInfor: state => state
 		})
 	},
 	data() {
-		return {};
+		return {}
 	},
 	methods: {}
-};
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
 @import "../../style/mixin";
 
-.contain {
-	width: 1200px;
-	margin: 0 auto;
-	margin-top: 30px;
-	.title {
-		@include sc(18px, $blue);
-		margin-bottom: 10px;
-	}
-	.main {
-		.main-left {
-			width: 290px;
-			float: left;
-			&.fixed {
-				position: fixed;
-				top: 0;
-			}
-		}
-		.main-right {
-			position: relative;
-			float: right;
-			width: calc(100% - 290px);
-			padding-left: 20px;
-		}
-	}
-}
 </style>

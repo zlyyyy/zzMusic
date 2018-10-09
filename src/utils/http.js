@@ -16,7 +16,7 @@ service.interceptors.request.use(config => {
         message: '加载超时',
         type: 'error',
         center: true
-    });
+    })
     return Promise.reject(error)
 })
 
@@ -30,7 +30,7 @@ service.interceptors.response.use(
             message: '加载失败',
             type: 'error',
             center: true
-        });
+        })
         return Promise.reject(error)
     }
 )
