@@ -3,7 +3,7 @@ import { Message } from 'element-ui'
 //  创建axios实例
 const service = axios.create({
     //  withCredentials` 表示跨域请求时是否需要使用凭证
-    withCredentials: true,
+    withCredentials: false,
     baseURL: 'http://localhost:3000',
     timeout: 15000 // 请求超时时间
 })

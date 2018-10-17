@@ -1,4 +1,2 @@
-export const photo = state => state.photo
-export const name = state => state.name
-// eslint-disable-next-line
-export const id = state => state.id
+export const banner = state => state.banner
+export const hots = state => state.search.hots

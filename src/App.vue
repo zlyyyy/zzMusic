@@ -5,7 +5,7 @@
                 <el-aside>
                     <nav-bar></nav-bar>
                 </el-aside>
-                <el-container>
+                <el-container class="container">
                     <el-header>
                         <page-head></page-head>
                     </el-header>
@@ -31,11 +31,8 @@ export default {
         NavBar,
         PageHead
     },
-    computed: {
-    },
     data () {
         return {
-            
         }
     },
     methods: {
@@ -50,6 +47,9 @@ export default {
 #app{
     display: flex;
     height: 100%;
+    .container{
+        padding: 20px;
+    }
 }
 /*  返回顶部 */
 .go-top-m {

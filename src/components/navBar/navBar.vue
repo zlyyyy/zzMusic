@@ -42,7 +42,7 @@ export default {
 @import '../../style/mixin';
 .nav-bar{
     @include wh(300px, 100%);
-    padding: 20px;
+    padding: 20px 0 20px 20px;
     background: #f5f7fa;
     .logo{
         margin-top: 20px;
@@ -52,17 +52,18 @@ export default {
         .menu-group{
             margin-bottom: 30px;
             .menu-title{
-                @include sc(14px, $title);
+                @include sc(14px, $font_second);
                 margin-bottom: 10px;
             }
             .menu-item{
-                @include sc(16px, $text);
+                @include sc(16px, $font_first);
                 margin: 0 0 10px 10px;
                 padding: 5px;
+                cursor: pointer;
                 &.active{
-                    background: $main;
-                    color: $white;
-                    @include borderRadius(4px);
+                    color: $main;
+                    font-weight: bolder;
+                    border-right: 4px solid $main;
                 }
             }
         }

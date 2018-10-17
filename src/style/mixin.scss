@@ -1,10 +1,14 @@
 $main: #3B75FF;  
 $pink: #f25d8e;
 $white: #fff;
-$text:#333;
-$title: #666;
-$grau: #99a2aa;
-$border_color: #eaeeed;
+$font_first: #303133;
+$font_second: #606266;
+$font_third: #909399;
+$font_fourth: #C0C4CC;
+$border_first: #DCDFE6;
+$border_second: #E4E7ED;
+$border_third: #EBEEF5;
+$border_fourth: #F2F6FC;
 
 //动画
 @mixin transition($time){

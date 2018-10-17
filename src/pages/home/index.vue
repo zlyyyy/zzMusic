@@ -1,11 +1,13 @@
 <template>
     <el-main class="contain">
-        <h1 class="title">手机号码</h1>
+		<h1 class="title">个性推荐</h1>
+        <carousel :banner="banner"></carousel>
     </el-main>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import Carousel from '../../components/carousel/carousel'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
 	props: {
@@ -14,22 +16,36 @@ export default {
 			default: 0
 		}
 	},
-	created() {},
-	components: {},
+	created() {
+		this.setBanner()
+	},
+	components: {
+		Carousel
+	},
 	computed: {
-		...mapState({
-			peopleInfor: state => state
-		})
+		...mapGetters([
+			'banner'
+		])
 	},
 	data() {
 		return {}
 	},
-	methods: {}
+	methods: {
+		...mapActions([
+			'setBanner'
+		])
+	}
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
 @import "../../style/mixin";
-
+.contain{
+	.title{
+		font-weight: bolder;
+		font-size: 18px;
+		margin-bottom: 10px;
+	}
+}
 </style>

@@ -1,5 +1,8 @@
 const state = {
-    banner: []
+    banner: [],
+    search: {
+        hots: []
+    }
 }
 
 export default state
