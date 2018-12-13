@@ -1,6 +1,8 @@
 <template>
     <div class="search">
-        <div class="title" v-if="titleShow">{{ title }}</div>
+        <transition name="el-fade-in-linear">
+            <div class="title" v-if="titleShow">{{ title }}</div>
+        </transition>
         <el-autocomplete
             name="热门搜索"
             popper-class="my-autocomplete"
@@ -62,7 +64,7 @@ export default {
             this.$emit('getSearchHot')
             this.titleShow = true
         },
-        handleBlur(event){
+        handleBlur(event) {
             // input失去焦点
             this.titleShow = false
         }

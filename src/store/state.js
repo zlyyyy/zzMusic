@@ -1,7 +1,13 @@
 const state = {
-    banner: [],
     search: {
         hots: []
+    },
+    banner: [],
+    personalized: [],
+    player: {
+        audio: null,
+        playing: false,
+        musicInfor: []
     }
 }
 

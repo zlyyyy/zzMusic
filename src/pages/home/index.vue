@@ -2,6 +2,7 @@
     <el-main class="contain">
 		<h1 class="title">个性推荐</h1>
         <carousel :banner="banner"></carousel>
+		<h1 class="title">推荐歌单</h1>
     </el-main>
 </template>
 
@@ -18,13 +19,15 @@ export default {
 	},
 	created() {
 		this.setBanner()
+		this.setPersonalized()
 	},
 	components: {
 		Carousel
 	},
 	computed: {
 		...mapGetters([
-			'banner'
+			'banner',
+			'personalized'
 		])
 	},
 	data() {
@@ -32,7 +35,8 @@ export default {
 	},
 	methods: {
 		...mapActions([
-			'setBanner'
+			'setBanner',
+			'setPersonalized'
 		])
 	}
 }

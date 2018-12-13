@@ -7,35 +7,53 @@
                 </el-aside>
                 <el-container class="container">
                     <el-header>
-                        <page-head></page-head>
+                        <zz-head></zz-head>
                     </el-header>
                     <el-main>
                         <router-view/>
                     </el-main>
                 </el-container>
             </el-container>
-            <el-footer></el-footer>
+            <el-footer height="100px">
+                <zz-player></zz-player>
+            </el-footer>
         </el-container>
+        <audio ref="zzMusic" :src="musicInfor.url"></audio>
     </div>
 </template>
 
 <script>
 import NavBar from './components/navBar/navBar'
-import PageHead from './components/header/header'
+import ZzHead from './components/header/header'
+import ZzPlayer from './components/player/player'
+import { mapGetters, mapMutations } from 'vuex'
+
 export default {
     created() {
+        this.$nextTick(() => {
+            this.setAudio(this.$refs.zzMusic)
+        })
     },
     mounted() {
     },
     components: {
         NavBar,
-        PageHead
+        ZzHead,
+        ZzPlayer
     },
-    data () {
+    computed: {
+        ...mapGetters([
+            'musicInfor'
+        ])
+    },
+    data() {
         return {
         }
     },
     methods: {
+        ...mapMutations({
+            setAudio: 'SET_AUDIO'
+        })
     }
 }
 </script>
@@ -47,8 +65,12 @@ export default {
 #app{
     display: flex;
     height: 100%;
+    color: $font_first;
     .container{
         padding: 20px;
+    }
+    .el-footer{
+        padding: 0;
     }
 }
 /*  返回顶部 */

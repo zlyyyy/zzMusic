@@ -19,6 +19,9 @@
 import SearchInput from '../searchInput/searchInput'
 import { mapGetters, mapActions } from 'vuex'
 export default {
+    created() {
+        this.setMusicInfor('158655')
+    },
     components: {
         SearchInput
     },
@@ -27,12 +30,13 @@ export default {
             'hots'
         ])
     },
-    data () {
+    data() {
         return {}
     },
     methods: {
         ...mapActions([
-            'setSearchHot'
+            'setSearchHot',
+            'setMusicInfor'
         ])
     }
 }

@@ -10,7 +10,7 @@ exec('npm info NeteaseCloudMusicApi version', (err, stdout, stderr) => {
     console.error(err);
     return;
   }
-  const onlinePackageVersion = stdout.trim();
+  const onlinePackageVersion =  stdout.trim();
   const package = require('./package.json')
   if (package.version < onlinePackageVersion) {
     console.log(
