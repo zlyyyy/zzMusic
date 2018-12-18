@@ -1,13 +1,12 @@
 <template>
-    <el-main class="contain">
+    <div class="home">
 		<h1 class="title">个性推荐</h1>
-        <carousel :banner="banner"></carousel>
+		<!-- <slide :slidedata="banner" :slidetimedata="4000" :pagation="false"></slide> -->
 		<h1 class="title">推荐歌单</h1>
-    </el-main>
+    </div>
 </template>
 
 <script>
-import Carousel from '../../components/carousel/carousel'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -22,7 +21,6 @@ export default {
 		this.setPersonalized()
 	},
 	components: {
-		Carousel
 	},
 	computed: {
 		...mapGetters([
@@ -45,7 +43,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
 @import "../../style/mixin";
-.contain{
+.home{
+	overflow: hidden;
 	.title{
 		font-weight: bolder;
 		font-size: 18px;

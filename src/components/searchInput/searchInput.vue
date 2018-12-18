@@ -1,72 +1,92 @@
 <template>
     <div class="search">
-        <transition name="el-fade-in-linear">
-            <div class="title" v-if="titleShow">{{ title }}</div>
-        </transition>
-        <el-autocomplete
-            name="热门搜索"
-            popper-class="my-autocomplete"
-            v-model="state"
-            label="热门搜索"
-            :fetch-suggestions="querySearch"
+        <AutoComplete
+            class="search-select-dropdown"
+            v-model="keyword"
+            icon="ios-search"
+            @on-focus="getHots"
+            @on-select="searchMusic"
+            @on-change="setSearchSuggest"
             placeholder="搜索音乐、视频、歌词、电台"
-            @focus="handleFocus"
-            @blur="handleBlur"
-            @select="handleSelect">
-            <i
-                class="el-icon-search el-input__icon"
-                slot="suffix"
-                @click="handleIconClick">
-            </i>
-            <template slot-scope="{ item }">
-                <div v-if="item.key == 0">热门搜索</div>
-                <div class="name">{{ item.first }}</div>
-            </template>
-        </el-autocomplete>
+            style="width:300px"
+            element-id="searchV"
+            clearable
+            transfer>
+            <div class="demo-auto-complete-item" v-for="(item, index) in searchResult" :key="index">
+                <div class="demo-auto-complete-group">
+                    <span>{{ item.title }}</span>
+                </div>
+                <Option v-for="option in item.children" :value="setOption(item,option)" :key="option.index">
+                    <span class="demo-auto-complete-title" v-html="setOption(item,option)"></span>
+                </Option>
+            </div>
+            <a :href="'/search?keyword='+keyword" class="demo-auto-complete-more" v-if="searchResult.length > 2">查看所有结果</a>
+        </AutoComplete>
     </div>
 </template>
 
 <script>
+import { mapState, mapActions, mapMutations } from 'vuex'
+
 export default {
-    props: {
-        hots: {
-            type: [Object, Array],
-            default: () => []
+    watch: {
+        suggest(newVal, oldVal) {
+            if (newVal.length == 0) {
+                this.setSearchOldSuggest(oldVal)
+            }
+        }
+    },
+    computed: {
+        ...mapState('search', {
+            hots: state => state.hots,
+            suggest: state => state.suggest
+        }),
+        keyword: {
+            get() {
+                return this.$store.state.search.keyword
+            },
+            set(value) {
+                this.setSearchKeyword(value)
+            }
+        },
+        searchResult() {
+            return this.keyword.length > 0 ? this.suggest : this.hots
         }
     },
     data() {
         return {
-            title: '热门搜索',
-            titleShow: false,
-            state: ''
+            title: '热门搜索'
         }
     },
     methods: {
-        querySearch(queryString, cb) {
-            var hots = this.hots
-            var results = queryString ? hots.filter(this.createFilter(queryString)) : hots
-            // 调用 callback 返回建议列表的数据
-            cb(results)
-        },
-        createFilter(queryString) {
-            return (hots) => {
-                return (hots.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
+        ...mapMutations('search', {
+            setSearchKeyword: 'SET_SEARCH_KEYWORD',
+            setSearchOldSuggest: 'SET_SEARCH_SUGGEST'
+        }),
+        ...mapActions('search', [
+            'setSearchHot',
+            'setSearchSuggest'
+        ]),
+        // 字符串高亮匹配
+        keywordHighlight(str) {
+            if (this.keyword !== '') {
+                const em = `<em>${this.keyword}</em>`
+                return str.replace(this.keyword, em)
             }
         },
-        handleSelect(item) {
-            console.log(item)
+        // option切换值
+        setOption(item, option) {
+            return item.title == '热门搜索' ? option.first : this.keywordHighlight(option.name)
         },
-        handleIconClick(ev) {
-            console.log(1)
+        // 获取热搜
+        getHots() {
+            if (!this.hots.length > 0) {
+                this.setSearchHot()
+            }
         },
-        handleFocus(event) {
-            // fnputocus事件
-            this.$emit('getSearchHot')
-            this.titleShow = true
-        },
-        handleBlur(event) {
-            // input失去焦点
-            this.titleShow = false
+        // 建议跳转
+        searchMusic(val) {
+            this.$router.push( {path: 'search', query: { keyword: val }} )
         }
     }
 }
@@ -74,36 +94,40 @@ export default {
 
 <style lang="scss">
 @import '../../style/mixin';
-.search{
-    position: relative;
-    float: left;
-    margin-left: 20px;
-    .title{
-        position: absolute;
-        top: 56px;
-        font-size: 14px;
-        padding: 7px 30px;
-        width: 100%;
-        border-bottom: 1px solid $border_first;
-        z-index: 9999;
+.ivu-select-dropdown{
+    max-width: 300px;
+}
+.demo-auto-complete-item{
+    padding: 4px 0;
+    border-bottom: 1px solid $border_first;
+    .demo-auto-complete-group{
+        font-size: 12px;
+        padding: 4px 6px;
+        span{
+            @include sc(14px, $font_second);
+        }
     }
-    .el-autocomplete{
-        .el-input{
-            width: 300px;
+    li{
+        span{
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            em{
+                font-style: normal;
+                color: $main;
+            }
         }
     }
 }
-.my-autocomplete{
-    .el-scrollbar{
-        border: 1px solid $border_second;
-        .el-scrollbar__wrap{
-            margin-top: 40px;
-            border: none;
-            li {
-                line-height: normal;
-                padding: 7px 30px
-            }
-        }
+.demo-auto-complete-more{
+    display: block;
+    margin: 0 auto;
+    padding: 4px;
+    text-align: center;
+    font-size: 12px;
+    a{
+        color: $main;
     }
 }
 </style>

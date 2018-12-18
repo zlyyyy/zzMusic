@@ -1,31 +1,25 @@
 <template>
     <div id="app">
-        <el-container>
-            <el-container>
-                <el-aside>
-                    <nav-bar></nav-bar>
-                </el-aside>
-                <el-container class="container">
-                    <el-header>
-                        <zz-head></zz-head>
-                    </el-header>
-                    <el-main>
-                        <router-view/>
-                    </el-main>
-                </el-container>
-            </el-container>
-            <el-footer height="100px">
-                <zz-player></zz-player>
-            </el-footer>
-        </el-container>
+        <z-head></z-head>
+        <div class="z-content">
+            <div class="z-slider">
+                <nav-bar></nav-bar>
+            </div>
+            <div class="main-content">
+                <router-view />
+            </div>
+        </div>
+        <div class="z-foot">
+            <z-player></z-player>
+        </div>
         <audio ref="zzMusic" :src="musicInfor.url"></audio>
     </div>
 </template>
 
 <script>
 import NavBar from './components/navBar/navBar'
-import ZzHead from './components/header/header'
-import ZzPlayer from './components/player/player'
+import ZHead from './components/header/header'
+import ZPlayer from './components/player/player'
 import { mapGetters, mapMutations } from 'vuex'
 
 export default {
@@ -38,8 +32,8 @@ export default {
     },
     components: {
         NavBar,
-        ZzHead,
-        ZzPlayer
+        ZHead,
+        ZPlayer
     },
     computed: {
         ...mapGetters([
@@ -63,14 +57,27 @@ export default {
 @import './style/mixin';
 
 #app{
-    display: flex;
     height: 100%;
     color: $font_first;
-    .container{
-        padding: 20px;
+    .z-head{
+        @include wh(100%, 60px);
+        background: $main;
     }
-    .el-footer{
-        padding: 0;
+    .z-content{
+        display: flex;
+        @include wh(100%, calc(100% - 160px));
+        .z-slider{
+            width: 200px;
+        }
+        .main-content{
+            padding: 20px;
+            flex: 1;
+        }
+    }
+    .z-foot{
+        position: absolute;
+        bottom: 0;
+        @include wh(100%, 100px);
     }
 }
 /*  返回顶部 */

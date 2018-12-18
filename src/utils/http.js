@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
+// import { Message } from 'element-ui'
 //  创建axios实例
 const service = axios.create({
     //  withCredentials` 表示跨域请求时是否需要使用凭证
@@ -12,11 +12,11 @@ service.interceptors.request.use(config => {
     //  config.headers['Accept'] = 'application/json'
     return config
 }, error => {
-    Message({
-        message: '加载超时',
-        type: 'error',
-        center: true
-    })
+    // Message({
+    //     message: '加载超时',
+    //     type: 'error',
+    //     center: true
+    // })
     return Promise.reject(error)
 })
 
@@ -26,11 +26,11 @@ service.interceptors.response.use(
         return response.data
     },
     error => {
-        Message({
-            message: '加载失败',
-            type: 'error',
-            center: true
-        })
+        // Message({
+        //     message: '加载失败',
+        //     type: 'error',
+        //     center: true
+        // })
         return Promise.reject(error)
     }
 )

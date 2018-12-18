@@ -4,10 +4,6 @@ import http from '../utils/http'
 export function getBanner (id) {
     return http.get('/banner')
 }
-//  热搜
-export function getSearchHot() {
-    return http.get('/search/hot')
-}
 //  推荐歌单
 export function getPersonalized() {
     return http.get('/personalized')
@@ -20,11 +16,32 @@ export function getMusicInfor (ids) {
         }
     })
 }
-//  获取歌曲详情
+//  获取音乐url
 export function getMusicUrl (id) {
     return http.get('/song/url', {
         params: {
             id
+        }
+    })
+}
+
+//  搜索结果
+export function getSearch(keywords, limit, offset, type) {
+    return http.get('/search', {
+        params: {
+            keywords
+        }
+    })
+}
+//  热搜
+export function getSearchHot() {
+    return http.get('/search/hot')
+}
+//  搜索建议
+export function getSearchSuggest(keywords) {
+    return http.get('/search/suggest', {
+        params: {
+            keywords
         }
     })
 }

@@ -1,41 +1,38 @@
 <template>
-    <div class="header">
+    <div class="z-head">
+        <div class="logo">
+            ZZ-MUSIC
+        </div>
         <div class="page">
             <div class="button page-back">
-                <i class="el-icon-arrow-left"></i>
+                <Icon type="ios-arrow-back" />
             </div>
             <div class="button page-go">
-                <i class="el-icon-arrow-right"></i>
+                <Icon type="ios-arrow-forward" />
             </div>
         </div>
-        <search-input
-            :hots="hots"
-            @getSearchHot="setSearchHot"
-        ></search-input>
+        <search-input />
     </div>
 </template>
 
 <script>
 import SearchInput from '../searchInput/searchInput'
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
+
 export default {
     created() {
-        this.setMusicInfor('158655')
+        this.setMusicInfor('32102855')
     },
     components: {
         SearchInput
     },
     computed: {
-        ...mapGetters([
-            'hots'
-        ])
     },
     data() {
         return {}
     },
     methods: {
         ...mapActions([
-            'setSearchHot',
             'setMusicInfor'
         ])
     }
@@ -44,23 +41,38 @@ export default {
 
 <style lang="scss">
 @import '../../style/mixin';
-.header{
-    padding: 10px;
+.z-head{
+    position: relative;
+    padding: 10px 20px;
     height: 100%;
+    .logo{
+        position: absolute;
+        @include sc(24px, $white);
+        margin-right: 30px;
+    }
     .page{
-        overflow: hidden;
-        float: left;
+        position: absolute;
+        height: 30px;
+        top: 15px;
+        left: 220px;
         .button{
             @include wh(30px, 30px);
             border: 1px solid $border_first;
             @include borderRadius(4px);
-            width: 30px;
             text-align: center;
-            padding-top: 6px;
+            padding-top: 4px;
             float: left;
-            margin: 5px 10px 0 0;
+            margin: 0 10px 0 0;
             cursor: pointer;
+            i{
+                @include sc(20px, $white);
+            }
         }
+    }
+    .search{
+        position: absolute;
+        top: 14px;
+        left: 300px;
     }
 }
 </style>

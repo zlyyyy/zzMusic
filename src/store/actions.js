@@ -1,16 +1,10 @@
 import * as types from './mutation-types'
-import { getBanner, getSearchHot, getPersonalized, getMusicInfor } from '../api'
+import { getBanner, getPersonalized, getMusicInfor } from '../api'
 
 // 轮播图
 export const setBanner = function( {commit} ) {
     getBanner().then( res => {
         commit( types.SET_BANNER, res.banners )
-    })
-}
-// 热搜
-export const setSearchHot = function( {commit} ) {
-    getSearchHot().then( res => {
-        commit( types.SET_SEARCH_HOT, res.result.hots )
     })
 }
 // 推荐歌单

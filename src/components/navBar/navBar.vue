@@ -1,8 +1,8 @@
 <template>
     <div class="nav-bar">
-        <div class="logo">
+        <!-- <div class="logo">
             <img src="../../assets/logo.png" />
-        </div>
+        </div> -->
         <div class="menu">
             <div class="menu-group">
                 <div class="menu-title">推荐音乐</div>
@@ -41,7 +41,7 @@ export default {
 <style lang="scss">
 @import '../../style/mixin';
 .nav-bar{
-    @include wh(300px, 100%);
+    @include wh(200px, 100%);
     padding: 20px 0 20px 20px;
     background: #f5f7fa;
     .logo{

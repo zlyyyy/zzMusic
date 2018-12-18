@@ -1,7 +1,4 @@
 const state = {
-    search: {
-        hots: []
-    },
     banner: [],
     personalized: [],
     player: {
