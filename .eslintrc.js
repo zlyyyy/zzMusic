@@ -31,6 +31,7 @@ module.exports = {
 		// "space-before-blocks": [0, "always"],//不以新行开始的块 前面要不要有空格
 		"space-before-function-paren": [0, "always"],//函数定义时括号前面要不要有空格
 		"space-in-parens": [0, "never"],//小括号里面要不要有空格
-		"eqeqeq": "off"//必须使用全等，off关闭
+		"eqeqeq": "off",//必须使用全等，off关闭
+		"no-unused-expressions": 0,//短路求值和三目运算都允许
 	}
 }

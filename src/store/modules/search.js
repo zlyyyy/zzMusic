@@ -1,21 +1,68 @@
-import { getSearchHot, getSearchSuggest } from '../../api'
+import { getSearchHot, getSearchSuggest, getSearchResult } from '../../api'
 const state = {
-	keyword: '',
+	keywords: '',
 	hots: [],
-	suggest: []
+	suggest: [],
+	nav: [
+		{
+			title: '单曲',
+			type: 1,
+			result: false
+		},
+		{
+			title: '歌手',
+			type: 100,
+			result: false
+		},
+		{
+			title: '专辑',
+			type: 10,
+			result: false
+		},
+		{
+			title: '视频',
+			type: 1014,
+			result: false
+		},
+		{
+			title: '歌单',
+			type: 1000,
+			result: false
+		},
+		{
+			title: '歌词',
+			type: 1006,
+			result: false
+		},
+		{
+			title: '主播电台',
+			type: 1009,
+			result: false
+		},
+		{
+			title: '用户',
+			type: 1002,
+			result: false
+		}
+	],
+	result: []
 }
 
 const getters = {}
 
 const mutations = {
-	SET_SEARCH_KEYWORD: ( state, data ) => {
-		state.keyword = data
+	SET_SEARCH_KEYWORDS: ( state, data ) => {
+		state.keywords = data
     },
     SET_SEARCH_HOT: ( state, data ) => {
 		state.hots = data
 	},
 	SET_SEARCH_SUGGEST: ( state, data ) => {
 		state.suggest = data
+	},
+	SET_SEARCH_RESULT: ( state, data ) => {
+		state.result = data.result
+		state.nav[data.key].result = true
     }
 }
 
@@ -42,7 +89,7 @@ const actions = {
 				const _order = _data.order
 				let suggest = []
 				// 数据拼接
-				_order.forEach((val,key) => {
+				_order.forEach((val, key) => {
 					const title = setTitle(_order[key])
 					const item = {
 						title,
@@ -67,6 +114,18 @@ const actions = {
 				}
 				console.log(suggest)
 				commit('SET_SEARCH_SUGGEST', suggest)
+			})
+		}
+	},
+	// 搜索结果
+	setSearchResult( { commit, state }, { keywords, limit, offset, type, key } ) {
+		if (keywords !== '' && state.nav[key].result == false) {
+			getSearchResult(keywords, limit, offset, type).then( res => {
+				const data = {
+					result: res.result,
+					key
+				}
+				commit('SET_SEARCH_RESULT', data)
 			})
 		}
 	}

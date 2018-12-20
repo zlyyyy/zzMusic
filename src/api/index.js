@@ -26,10 +26,13 @@ export function getMusicUrl (id) {
 }
 
 //  搜索结果
-export function getSearch(keywords, limit, offset, type) {
+export function getSearchResult(keywords, limit, offset, type) {
     return http.get('/search', {
         params: {
-            keywords
+            keywords,
+            limit,
+            offset,
+            type
         }
     })
 }
