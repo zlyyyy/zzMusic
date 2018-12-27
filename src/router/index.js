@@ -7,7 +7,7 @@ const Home = resolve => require(['@/pages/home/home'], resolve)
 const Search = resolve => require(['@/pages/search/search'], resolve)
 
 export default new Router({
-    mode: 'history',
+    mode: 'hash',
     routes: [
         {
             path: '/',

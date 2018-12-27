@@ -1,13 +1,51 @@
 <template>
     <div class="home">
-		<h1 class="title">个性推荐</h1>
-		<!-- <slide :slidedata="banner" :slidetimedata="4000" :pagation="false"></slide> -->
-		<h1 class="title">推荐歌单</h1>
+		<div class="module slide">
+			<Carousel autoplay loop>
+				<CarouselItem v-for="item in banner" :key="item.index">
+					<div class="item-carousel" :style="{'background-image':'url('+item.backgroundUrl+')'}" >
+						<a :href="item.url">
+							<img :src="item.picUrl" />
+						</a>
+					</div>
+				</CarouselItem>
+			</Carousel>
+		</div>
+		<div class="module recommend">
+			<h1 class="title">推荐歌单</h1>
+			<div class="module-contain">
+				<zz-imglist>
+					<template slot="content">
+						<li class="img songs">
+							<a href="/discover/recommend/taste" title="每日歌曲推荐" class="date">
+								<span class="head">星期四</span>
+								<span class="bd">27</span>
+								<span class="mask"></span>
+							</a>
+							<p class="title">
+								<a class="tit" title="每日歌曲推荐" href="/discover/recommend/taste">
+									每日歌曲推荐
+								</a>
+							</p>
+						</li>
+						<li class="img songs" v-for="(item, index) in recData" v-if="index<4" :key="index">
+							<div class="cover">
+								<img :src="item.picUrl" />
+								<p class="msk-1">{{ '播放数:' + numFormat(item.playcount) }}</p>
+								<p class="copywriter">{{ item.copywriter }}</p>
+							</div>
+							<p class="title" :title="item.name">{{ item.name }}</p>
+						</li>
+					</template>
+				</zz-imglist>
+			</div>
+		</div>
     </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import zzImglist from '../../components/zzImglist/zzImglist'
+import { mapGetters, mapState, mapActions } from 'vuex'
 
 export default {
 	props: {
@@ -17,16 +55,28 @@ export default {
 		}
 	},
 	created() {
-		this.setBanner()
-		this.setPersonalized()
+		this.$nextTick(() => {
+			// 获取slide
+			this.setBanner()
+			// 是否登录获取推荐歌单
+			this.loginStatus ? this.setRecommend() : this.setPersonalized()
+		})
 	},
 	components: {
+		zzImglist
 	},
 	computed: {
 		...mapGetters([
 			'banner',
 			'personalized'
-		])
+		]),
+		...mapState('user', {
+			loginStatus: state => state.loginStatus,
+			recommend: state => state.recommend
+		}),
+		recData() {
+			return this.loginStatus ? this.recommend : this.personalized
+		}
 	},
 	data() {
 		return {}
@@ -35,7 +85,14 @@ export default {
 		...mapActions([
 			'setBanner',
 			'setPersonalized'
-		])
+		]),
+		...mapActions('user', [
+			'setRecommend'
+		]),
+		// 数量转换
+		numFormat(num) {
+            return num > 1e5 ? (Math.floor(num / 1e4) + '万') : num
+		}
 	}
 }
 </script>
@@ -45,10 +102,91 @@ export default {
 @import "../../style/mixin";
 .home{
 	overflow: hidden;
-	.title{
-		font-weight: bolder;
-		font-size: 18px;
+	.module{
 		margin-bottom: 10px;
+		&.slide{
+			.item-carousel{
+				text-align: center
+			}
+		}
+		.title{
+			font-weight: bolder;
+			font-size: 18px;
+			line-height: 30px;
+			padding: 0 0 5px;
+			margin-bottom: 10px;
+			border-bottom: 1px solid $border_first;
+		}
+		&.recommend{
+			.songs{
+				.date{
+					display: block;
+					@include wh(134px, 134px);
+					background: $white;
+					border: 1px solid $border_first;
+					.head{
+						display: block;
+						height: 33px;
+						line-height: 33px;
+						color: $font_first;
+						font-size: 14px;
+						text-align: center;
+					}
+					.bd{
+						display: block;
+						line-height: 102px;
+						text-align: center;
+						font-size: 94px;
+						font-family: Arial, Helvetica, sans-serif;
+						font-weight: bold;
+						color: #202020;
+					}
+					.mask{
+						position: absolute;
+						top: 33px;
+						left: 0;
+						width: 142px;
+						height: 107px;
+						background-position: 0 -150px;
+					}
+				}
+				.title{
+					a{
+						color: $font_first;
+					}
+				}
+				.cover{
+					.copywriter{
+						position: absolute;
+						top: -50px;
+						right: 0;
+						height: 48px;
+						width: 100%;
+						background: rgba(0, 0, 0, .4);
+						padding: 5px;
+						-webkit-box-sizing: border-box;
+						box-sizing: border-box;
+						text-align: left;
+						text-shadow: none;
+						@include transition(.3s);
+						overflow: hidden;
+						text-overflow: ellipsis;
+						display: -webkit-box; // 将对象作为弹性伸缩盒子模型显示
+						-webkit-box-orient: vertical; // 从上到下垂直排列子元素（设置伸缩盒子的子元素排列方式）
+						-webkit-line-clamp: 2;//这个属性不是css的规范属性，需要组合上面两个属性，表示显示的行数。
+					}
+					&:hover{
+						.msk-1{
+							display: none;
+						}
+						.copywriter{
+							top: 0;
+							@include transition(.3s);
+						}
+					}
+				}
+			}
+		}
 	}
 }
 </style>

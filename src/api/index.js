@@ -1,10 +1,28 @@
 import http from '../utils/http'
 
+//  手机登录
+export function getLoginPhone (data) {
+    return http.get('/login/cellphone', {
+        params: {
+            phone: data.phone,
+            password: data.password
+        }
+    })
+}
+//  获取登录状态
+export function getLoginStatus () {
+    return http.get('/login/status')
+}
+//  用户每日推荐歌单-需登录
+export function getRecommend() {
+    return http.get('/recommend/resource')
+}
+
 //  banner
 export function getBanner (id) {
     return http.get('/banner')
 }
-//  推荐歌单
+// 未登录推荐歌单
 export function getPersonalized() {
     return http.get('/personalized')
 }

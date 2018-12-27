@@ -16,27 +16,27 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
     }
 }
 
-// /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/  
-// ::-webkit-scrollbar  
-// {  
-//     width: 10px;  
-//     height: 10px;  
-//     background-color: #F5F5F5;  
-// }  
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/  
+::-webkit-scrollbar  
+{
+    width: 6px;  
+    height: 10px;
+    background-color: #F5F5F5;  
+}  
   
-// /*定义滚动条轨道 内阴影+圆角*/  
-// ::-webkit-scrollbar-track  
-// {  
-//     border-radius: 10px;  
-//     background-color: #F5F5F5;  
-// }  
+/*定义滚动条轨道 内阴影+圆角*/  
+::-webkit-scrollbar-track  
+{  
+    border-radius: 10px;  
+    background-color: #F5F5F5;  
+}  
   
-// /*定义滑块 内阴影+圆角*/  
-// ::-webkit-scrollbar-thumb  
-// {  
-//     border-radius: 10px;  
-//     background-color: #555;  
-// }  
+/*定义滑块 内阴影+圆角*/  
+::-webkit-scrollbar-thumb  
+{  
+    border-radius: 10px;  
+    background-color: #B3B3B3;  
+}  
 
 input[type="button"], input[type="submit"], input[type="search"], input[type="reset"] {
     -webkit-appearance: none;
@@ -106,4 +106,16 @@ html,body{
 
 .animation_opactiy{
     animation: backOpacity 2s ease-in-out infinite;
+}
+// loading
+.demo-spin-icon-load{
+    animation: ani-demo-spin 1s linear infinite;
+}
+@keyframes ani-demo-spin {
+    from { transform: rotate(0deg);}
+    50%  { transform: rotate(180deg);}
+    to   { transform: rotate(360deg);}
+}
+.loading-text{
+    font-size: 12px;
 }

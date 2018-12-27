@@ -62,7 +62,7 @@ const mutations = {
 	},
 	SET_SEARCH_RESULT: ( state, data ) => {
 		state.result = data.result
-		state.nav[data.key].result = true
+		// state.nav[data.key].result = true
     }
 }
 
@@ -112,22 +112,19 @@ const actions = {
 							return '歌单'
 					}
 				}
-				console.log(suggest)
 				commit('SET_SEARCH_SUGGEST', suggest)
 			})
 		}
 	},
 	// 搜索结果
 	setSearchResult( { commit, state }, { keywords, limit, offset, type, key } ) {
-		if (keywords !== '' && state.nav[key].result == false) {
-			getSearchResult(keywords, limit, offset, type).then( res => {
-				const data = {
-					result: res.result,
-					key
-				}
-				commit('SET_SEARCH_RESULT', data)
-			})
-		}
+		getSearchResult(keywords, limit, offset, type).then( res => {
+			const data = {
+				result: res.result,
+				key
+			}
+			commit('SET_SEARCH_RESULT', data)
+		})
 	}
 }
 

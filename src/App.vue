@@ -12,6 +12,7 @@
         <div class="z-foot">
             <z-player></z-player>
         </div>
+        <login/>
         <audio ref="zzMusic" :src="musicInfor.url"></audio>
     </div>
 </template>
@@ -20,6 +21,7 @@
 import NavBar from './components/navBar/navBar'
 import ZHead from './components/header/header'
 import ZPlayer from './components/player/player'
+import Login from './components/login/login'
 import { mapGetters, mapMutations } from 'vuex'
 
 export default {
@@ -33,7 +35,8 @@ export default {
     components: {
         NavBar,
         ZHead,
-        ZPlayer
+        ZPlayer,
+        Login
     },
     computed: {
         ...mapGetters([
@@ -70,6 +73,8 @@ export default {
             width: 200px;
         }
         .main-content{
+            height: 100%;
+            overflow-y: auto;
             padding: 20px;
             flex: 1;
         }
