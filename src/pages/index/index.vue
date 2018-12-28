@@ -22,19 +22,24 @@
 								<span class="bd">27</span>
 								<span class="mask"></span>
 							</a>
-							<p class="title">
-								<a class="tit" title="每日歌曲推荐" href="/discover/recommend/taste">
-									每日歌曲推荐
-								</a>
-							</p>
+							<a class="title" title="每日歌曲推荐" href="/discover/recommend/taste">
+								每日歌曲推荐
+							</a>
 						</li>
 						<li class="img songs" v-for="(item, index) in recData" v-if="index<4" :key="index">
 							<div class="cover">
 								<img :src="item.picUrl" />
 								<p class="msk-1">{{ '播放数:' + numFormat(item.playcount) }}</p>
 								<p class="copywriter">{{ item.copywriter }}</p>
+								<router-link
+									class="link"
+									:to="{path: '/music/playlist', query: { id: item.id }}"
+									tag="a"
+								/>
 							</div>
-							<p class="title" :title="item.name">{{ item.name }}</p>
+							<a class="title" :title="item.name" :href="'/playlist?id=' + item.id">
+								{{ item.name }}
+							</a>
 						</li>
 					</template>
 				</zz-imglist>
@@ -150,18 +155,14 @@ export default {
 						background-position: 0 -150px;
 					}
 				}
-				.title{
-					a{
-						color: $font_first;
-					}
-				}
 				.cover{
+					@include wh(134px, 134px);
 					.copywriter{
 						position: absolute;
 						top: -50px;
 						right: 0;
-						height: 48px;
-						width: 100%;
+						@include wh(100%, 48px);
+						@include sc(12px, $white);
 						background: rgba(0, 0, 0, .4);
 						padding: 5px;
 						-webkit-box-sizing: border-box;

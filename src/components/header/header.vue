@@ -1,8 +1,8 @@
 <template>
     <div class="z-head">
-        <div class="logo">
+        <router-link :to="{path:'/'}" tag="div" class="logo">
             ZZ-MUSIC
-        </div>
+        </router-link>
         <div class="page">
             <div class="button page-back">
                 <Icon type="ios-arrow-back" />
@@ -60,6 +60,7 @@ export default {
     },
     computed: {
         ...mapState('user', {
+            user: state => state,
             loginStatus: state => state.loginStatus,
             profile: state => state.profile
         })
@@ -101,6 +102,7 @@ export default {
     height: 100%;
     .logo{
         position: absolute;
+        cursor: pointer;
         @include sc(24px, $white);
         margin-right: 30px;
     }

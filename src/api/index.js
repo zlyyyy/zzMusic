@@ -66,3 +66,12 @@ export function getSearchSuggest(keywords) {
         }
     })
 }
+
+//  获取歌单详情
+export function getPlaylistDetail(id) {
+    return http.get('/playlist/detail', {
+        params: {
+            id
+        }
+    })
+}

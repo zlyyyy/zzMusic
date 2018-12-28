@@ -16,7 +16,7 @@
                 <div class="demo-auto-complete-group">
                     <span>{{ item.title }}</span>
                 </div>
-                <Option v-for="option in item.children" :value="setOption(item,option)" :key="option.index">
+                <Option v-for="option in item.children" :value="item.title == '热门搜索' ? option.first : option.name" :key="option.index">
                     <span class="demo-auto-complete-title" v-html="setOption(item,option)"></span>
                 </Option>
             </div>
@@ -86,8 +86,9 @@ export default {
         },
         // 建议跳转
         searchMusic(val) {
-            console.log(val)
-            this.$router.push( {path: 'search', query: { keywords: val }} )
+            let _val = val.replace('<em>', '').replace('</em>', '')
+            console.log(_val)
+            this.$router.push( {path: '/music/search', query: { keywords: _val }} )
         }
     }
 }

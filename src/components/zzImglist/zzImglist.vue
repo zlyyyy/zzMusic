@@ -32,23 +32,26 @@ export default {
 	.zz-img-list{
 		margin: 26px 0 0 -26px;
 		height: 100%;
+		font-size: 0;
 		.img, .video{
-			float: left;
+			display: inline-block;
 			width: 20%;
+			vertical-align: top;
 			padding: 0 0 26px 26px;
 			line-height: 1.5;
 			cursor: pointer;
 			overflow: hidden;
 			.cover{
 				position: relative;
-				@include wh(134px, 134px);
+				width: 100%;
 				img{
 					width: 100%;
 				}
 				p{
+					width: 100%;
 					height: 20px;
 					line-height: 20px;
-					color: $white;
+					@include sc(12px, $white);
 					text-shadow: -2px 1px rgba(0,0,0,.4);
 				}
 				.msk-1{
@@ -65,18 +68,35 @@ export default {
 					left: 0;
 					padding-left: 5px;
 				}
+				.link{
+					position: absolute;
+					left: 0;
+					top: 0;
+					width: 100%;
+					height: 100%;
+					z-index: 9;
+				}
 			}
-			.title{
+			.name{
 				width: 100%;
 				height: auto;
+				margin: 2px 0 1px;
+				@include sc(12px, $font_second);
+			}
+			.title{
+				display: block;
+				@include wh(100%, auto);
 				margin: 7px 0 1px;
 				border: none;
-				font-size: 14px;
+				line-height: 20px;
+				@include sc(14px, $font_first);
 				font-weight: normal;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-				word-wrap: normal;
+				&.el{
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					word-wrap: normal;
+				}
 			}
 		}
 	}

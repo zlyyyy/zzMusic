@@ -3,26 +3,44 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-const Home = resolve => require(['@/pages/home/home'], resolve)
-const Search = resolve => require(['@/pages/search/search'], resolve)
-
 export default new Router({
     mode: 'hash',
     routes: [
         {
             path: '/',
-            name: 'Home',
-            component: Home,
-            meta: {
-                title: 'ZZ-music'
-            }
+            redirect: '/music'
         },
         {
-            path: '/search',
-            component: Search,
+            path: '/music',
+            component: () => import('../pages/music'),
+            redirect: '/music/index',
             meta: {
-                title: '搜索'
-            }
+                title: 'ZZ-music',
+                keepAlive: true
+            },
+            children: [
+                {
+                    path: 'index',
+                    component: () => import('../pages/index/index'),
+                    meta: {
+                        title: '搜索'
+                    }
+                },
+                {
+                    path: 'search',
+                    component: () => import('../pages/search/search'),
+                    meta: {
+                        title: '搜索'
+                    }
+                },
+                {
+                    path: 'playlist',
+                    component: () => import('../pages/playlist/playlist'),
+                    meta: {
+                        title: '歌单'
+                    }
+                }
+            ]
         }
     ]
 })

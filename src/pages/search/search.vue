@@ -42,7 +42,7 @@
 							<p class="msk-1">{{ numFormat(item.playTime) }}</p>
 							<p class="msk-2">{{ timeFormat(item.durationms) }}</p>
 						</div>
-						<p class="title" :title="item.title">{{ item.title }}</p>
+						<p class="title el" :title="item.title">{{ item.title }}</p>
 						<p class="name">{{ 'by ' + item.creator[0].userName }}</p>
 					</li>
 				</zz-imglist>
@@ -81,8 +81,8 @@
 						<p class="title" :title="item.name">{{ item.name }}</p>
 						<p class="name">
 							{{ 'by ' + item.dj.nickname }}
-							<span>{{ item.dj.gender==1 ?  '男' : '女' }}</span>
-							<i class="iconfont" :class="[{'icon-nan': item.dj.gender =='1'},{'icon-nv': item.dj.gender =='2' }]"></i>
+							<!-- <span>{{ item.dj.gender==1 ?  '男' : '女' }}</span> -->
+							<!-- <i class="iconfont" :class="[{'icon-nan': item.dj.gender =='1'},{'icon-nv': item.dj.gender =='2' }]"></i> -->
 						</p>
 					</li>
 				</zz-imglist>
@@ -102,10 +102,7 @@
 				<div class="errNote" v-if="type == 1002 && !searchData.userprofiles.result" v-html="errNote"></div>
 			</TabPane>
 		</Tabs>
-		<Spin fix v-if="loading">
-			<Icon type="ios-loading" size=24 class="demo-spin-icon-load"></Icon>
-            <div class="loading-text">努力加载中</div>
-		</Spin>
+		<zz-loading v-if="loading"></zz-loading>
     </div>
 </template>
 
@@ -113,6 +110,7 @@
 import zzTable from '../../components/zzTable/zzTable'
 import zzTablelist from '../../components/zzTablelist/zzTablelist'
 import zzImglist from '../../components/zzImglist/zzImglist'
+import zzLoading from '../../components/zzLoading/zzLoading'
 import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
@@ -131,7 +129,8 @@ export default {
 	components: {
 		zzTable,
 		zzTablelist,
-		zzImglist
+		zzImglist,
+		zzLoading
 	},
 	computed: {
 		...mapState('search', [
