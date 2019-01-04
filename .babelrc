@@ -8,9 +8,12 @@
 	  }],
 	  "stage-2"
 	],
-	"plugins": [["import", {
+	"plugins": [
+		"transform-runtime",
+		["import", {
 		"libraryName": "iview",
 		"libraryDirectory": "src/components"
-	  }]]
-  }
+		}]
+	]
+}
   

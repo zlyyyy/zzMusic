@@ -30,11 +30,11 @@
 						</span>
 					</div>
 				</div>
-				<div class="tags" v-html="playlistDetail.tags">
+				<div v-if="playlistDetail.tags != null" class="tags" v-html="playlistDetail.tags">
 				</div>
-				<div class="des" v-html="playlistDetail.description" :class="{ 'el': !desShow }">
+				<div v-if="playlistDetail.description != null" class="des" v-html="playlistDetail.description" :class="{ 'el': !desShow }">
 				</div>
-				<div class="des-btn" @click="desShow = !desShow">
+				<div v-if="playlistDetail.description != null" class="des-btn" @click="desShow = !desShow">
 					{{ desShow ? '收起' : '展开' }}
 					<Icon v-if="!desShow" type="ios-arrow-down" />
 					<Icon v-else type="ios-arrow-up" />
@@ -73,7 +73,6 @@ export default {
 		this.$nextTick(() => {
 			// 获取数据
 			this.setPlaylistDetail(this.queryId)
-			this.loading = false
 		})
 	},
 	components: {
@@ -82,6 +81,7 @@ export default {
 	},
 	computed: {
 		...mapState('playlist', [
+			'loading',
 			'playlistDetail'
 		]),
 		queryId() {
@@ -90,6 +90,10 @@ export default {
 		}
 	},
 	watch: {
+		queryId(newVal, oldVal) {
+			// 获取数据
+			this.setPlaylistDetail(newVal)
+		},
 		playlistDetail(newVal, oldVal) {
 			this.playlist.tableColumns = [
 				{
@@ -139,13 +143,11 @@ export default {
 				_data = [..._data, _ele]
 			})
 			this.playlist.result = _data
-			console.log(this.playlist)
 		}
 	},
 	data() {
 		return {
 			currentKey: 0,
-			loading: true,
 			desShow: false,
 			playlist: {}
 		}

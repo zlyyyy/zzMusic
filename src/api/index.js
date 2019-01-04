@@ -17,6 +17,14 @@ export function getLoginStatus () {
 export function getRecommend() {
     return http.get('/recommend/resource')
 }
+//  获取用户歌单
+export function getUserPlaylist(uid) {
+    return http.get('/user/playlist', {
+        params: {
+            uid
+        }
+    })
+}
 
 //  banner
 export function getBanner (id) {

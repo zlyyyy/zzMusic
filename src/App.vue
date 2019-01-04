@@ -28,5 +28,6 @@ export default {
 @import './style/common';
 #app{
     height: 100%;
+    overflow: hidden;
 }
 </style>

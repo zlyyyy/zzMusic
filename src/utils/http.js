@@ -6,7 +6,7 @@ const service = axios.create({
     //  withCredentials` 表示跨域请求时是否需要使用凭证
     withCredentials: true,
     baseURL: 'http://localhost:3000',
-    timeout: 15000 // 请求超时时间
+    timeout: 150000 // 请求超时时间
 })
 //  添加请求拦截器
 service.interceptors.request.use(config => {

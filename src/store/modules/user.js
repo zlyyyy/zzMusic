@@ -1,11 +1,13 @@
-import { getRecommend } from '../../api'
+import { getRecommend, getUserPlaylist } from '../../api'
 import locs from '../../utils/locs'
 const state = {
     loginStatus: locs.get('profile') ? true : false,
     account: locs.get('account'),
     bindings: locs.get('bindings'),
     profile: locs.get('profile'),
-    recommend: [] // 推荐歌单
+    playlistSet: [], // 用户创建的歌单
+    playlistCollect: [], // 用户收藏的歌单
+    recommend: [] // 登录推荐歌单
 }
 
 const getters = {}
@@ -18,6 +20,12 @@ const mutations = {
     },
     SET_RECOMMEND: ( state, data ) => {
         state.recommend = data
+    },
+    SET_PLAYLIST_SET: ( state, data ) => {
+        state.playlistSet = data
+    },
+    SET_PLAYLIST_COLLECT: ( state, data ) => {
+        state.playlistCollect = data
     }
 }
 
@@ -53,6 +61,29 @@ const actions = {
                 _data = [..._data, _ele]
             })
             commit('SET_RECOMMEND', _data)
+        })
+    },
+    // 获取用户歌单
+    setUserPlaylist( { commit, state } ) {
+        const uid = state.profile.userId
+        getUserPlaylist(uid).then(res => {
+            let _set = []
+            let _collect = []
+            res.playlist.forEach((ele, index) => {
+                const _ele = {
+                    id: ele.id,
+                    name: ele.name,
+                    icon: 'icon-music-list',
+                    path: `/music/playlist?id=${ele.id}`
+                }
+                if (ele.subscribed) {
+                    _collect = [..._collect, _ele]
+                } else {
+                    _set = [..._set, _ele]
+                }
+            })
+            commit('SET_PLAYLIST_SET', _set)
+            commit('SET_PLAYLIST_COLLECT', _collect)
         })
     }
 }

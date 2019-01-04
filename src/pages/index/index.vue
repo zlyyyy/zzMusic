@@ -20,7 +20,7 @@
 							<a href="/discover/recommend/taste" title="每日歌曲推荐" class="date">
 								<span class="head">星期四</span>
 								<span class="bd">27</span>
-								<span class="mask"></span>
+								<!-- <span class="mask"></span> -->
 							</a>
 							<a class="title" title="每日歌曲推荐" href="/discover/recommend/taste">
 								每日歌曲推荐
@@ -76,8 +76,8 @@ export default {
 			'personalized'
 		]),
 		...mapState('user', {
-			loginStatus: state => state.loginStatus,
-			recommend: state => state.recommend
+			loginStatus: state => state.loginStatus, // 登录状态
+			recommend: state => state.recommend // 登录推荐歌单
 		}),
 		recData() {
 			return this.loginStatus ? this.recommend : this.personalized
