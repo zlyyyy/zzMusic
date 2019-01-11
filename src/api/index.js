@@ -13,6 +13,10 @@ export function getLoginPhone (data) {
 export function getLoginStatus () {
     return http.get('/login/status')
 }
+//  用户每日推荐歌曲-需登录
+export function getRecommendSongs() {
+    return http.get('/recommend/songs')
+}
 //  用户每日推荐歌单-需登录
 export function getRecommend() {
     return http.get('/recommend/resource')

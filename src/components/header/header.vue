@@ -50,7 +50,7 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
     created() {
-        this.setMusicInfor('32102855')
+        // this.setMusicInfor('32102855')
     },
     components: {
         SearchInput,

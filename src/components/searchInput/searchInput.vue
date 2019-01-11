@@ -4,9 +4,10 @@
             class="search-select-dropdown"
             v-model="keywords"
             icon="ios-search"
+            @on-enter="searchMusic"
             @on-focus="getHots"
             @on-select="searchMusic"
-            @on-change="setSearchSuggest"
+            @on-change="changeGetSearchMusic"
             placeholder="搜索音乐、视频、歌词、电台"
             style="width:300px"
             element-id="searchV"
@@ -67,6 +68,13 @@ export default {
             'setSearchHot',
             'setSearchSuggest'
         ]),
+        // 动态搜索
+        changeGetSearchMusic(keywords) {
+            // 实时获取搜索建议
+            this.setSearchSuggest(keywords)
+            // 实时获取搜索结果
+            this.searchMusic(keywords)
+        },
         // 字符串高亮匹配
         keywordsHighlight(str) {
             if (this.keywords !== '') {

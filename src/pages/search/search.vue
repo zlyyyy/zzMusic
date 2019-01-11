@@ -102,6 +102,14 @@
 				<div class="errNote" v-if="type == 1002 && !searchData.userprofiles.result" v-html="errNote"></div>
 			</TabPane>
 		</Tabs>
+		<Page
+			:total="pageTotal"
+			show-total
+			v-if="pageTotal > 20"
+			:page-size="20"
+			:current="pageCurrent"
+			@on-change="getPageData"
+		/>
 		<zz-loading v-if="loading"></zz-loading>
     </div>
 </template>
@@ -162,7 +170,7 @@ export default {
 			switch (this.type) {
 				case 1:
 					currentData = _searchData.songs
-					currentData.resultCount = newVal.songCount
+					this.pageTotal = currentData.resultCount = newVal.songCount
 					this.note = `${_text}${currentData.resultCount}首单曲`
 					if (newVal.songCount != 0) {
 						currentData.tableColumns = [
@@ -205,7 +213,7 @@ export default {
 					break
 				case 100:
 					currentData = _searchData.artists
-					currentData.resultCount = newVal.artistCount
+					this.pageTotal = currentData.resultCount = newVal.artistCount
 					this.note = `${_text}${currentData.resultCount}位歌手`
 					if (newVal.artistCount != 0) {
 						newVal.artists.forEach((ele, index) => {
@@ -228,7 +236,7 @@ export default {
 					break
 				case 10:
 					currentData = _searchData.albums
-					currentData.resultCount = newVal.albumCount
+					this.pageTotal = currentData.resultCount = newVal.albumCount
 					this.note = `${_text}${currentData.resultCount}张专辑`
 					if (newVal.albumCount != 0) {
 						newVal.albums.forEach((ele, index) => {
@@ -252,7 +260,7 @@ export default {
 					break
 				case 1014:
 					currentData = _searchData.videos
-					currentData.resultCount = newVal.videoCount
+					this.pageTotal = currentData.resultCount = newVal.videoCount
 					this.note = `${_text}${currentData.resultCount}个视频`
 					if (newVal.videoCount != 0) {
 						newVal.videos.forEach((ele, index) => {
@@ -273,7 +281,7 @@ export default {
 					break
 				case 1000:
 					currentData = _searchData.playlists
-					currentData.resultCount = newVal.playlistCount
+					this.pageTotal = currentData.resultCount = newVal.playlistCount
 					this.note = `${_text}${currentData.resultCount}个歌单`
 					if (newVal.playlistCount != 0) {
 						newVal.playlists.forEach((ele, index) => {
@@ -296,7 +304,7 @@ export default {
 					break
 				case 1006:
 					currentData = _searchData.lyrics
-					currentData.resultCount = newVal.songCount
+					this.pageTotal = currentData.resultCount = newVal.songCount
 					this.note = `${_text}${currentData.resultCount}首单曲`
 					if (newVal.songCount != 0) {
 						currentData.tableColumns = [
@@ -341,9 +349,9 @@ export default {
 					break
 				case 1009:
 					currentData = _searchData.djRadios
-					currentData.resultCount = newVal.djRadiosCount
+					this.pageTotal = currentData.resultCount = newVal.djRadiosCount
 					this.note = `${_text}${currentData.resultCount}个节目`
-					if (newVal.djRadiosCount != 0) {
+					if (newVal.djRadiosCount && newVal.djRadiosCount != 0) {
 						newVal.djRadios.forEach((ele, index) => {
 							const _ele = {
 								id: ele.id,
@@ -364,7 +372,7 @@ export default {
 					break
 				case 1002:
 					currentData = _searchData.userprofiles
-					currentData.resultCount = newVal.userprofileCount
+					this.pageTotal = currentData.resultCount = newVal.userprofileCount
 					this.note = `${_text}${currentData.resultCount}位用户`
 					if (newVal.userprofileCount != 0) {
 						newVal.userprofiles.forEach((ele, index) => {
@@ -390,10 +398,12 @@ export default {
 	},
 	data() {
 		return {
-			currentKey: 0,
-			type: 0,
-			errNote: '',
-			note: '',
+			currentKey: 0, // tab高亮key
+			type: 0, // tab高亮type
+			pageTotal: 0, // 当前页数据总条数
+			pageCurrent: 1, // 当前页码
+			errNote: '', // 无数据索引
+			note: '', // 有数据索引
 			loading: true,
 			searchData: {
 				songs: {},
@@ -414,7 +424,10 @@ export default {
 		...mapActions('search', [
 			'setSearchResult'
 		]),
-		getSearchResult(key) {
+		// 获取数据
+		getSearchResult(key, offset) {
+			// 重置分页
+			this.pageCurrent = (offset ? offset : 1)
 			this.currentKey = key
 			let type = this.nav[key].type
 			this.type = type
@@ -424,11 +437,15 @@ export default {
 				this.setSearchResult({
 					keywords: this.keywords,
 					limit: 20,
-					offset: 0,
+					offset: offset ? offset - 1 : 0,
 					type,
 					key
 				})
 			}
+		},
+		// 分页获取数据
+		getPageData(page) {
+			this.getSearchResult(this.currentKey, page)
 		},
 		// 字符串高亮匹配
         keywordsHighlight(str) {
@@ -466,7 +483,7 @@ export default {
 @import "../../style/mixin";
 .search-content{
 	position: relative;
-	height: 100%;
+	overflow: hidden;
 	.note{
 		font-size: 14px;
 		margin-bottom: 10px;
@@ -503,6 +520,10 @@ export default {
 				}
 			}
 		}
+	}
+	.ivu-page{
+		text-align: center;
+		margin: 20px 0;
 	}
 }
 </style>

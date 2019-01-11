@@ -62,7 +62,7 @@ export default {
                         {
                             name: '发现音乐',
                             icon: 'icon-music',
-                            path: '/music/index'
+                            path: '/discover/index'
                         },
                         {
                             name: '私人FM',

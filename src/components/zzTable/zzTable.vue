@@ -1,12 +1,12 @@
 <template>
     <div class="zz-table">
-        <ul class="zz-table-header">
+        <ul class="zz-table-header" v-if="columns.length > 0">
 			<li v-for="(item, index) in columns" :class="item.class" :key="index">
 				{{ item.title }}
 			</li>
 		</ul>
 		<ul class="zz-table-list">
-			<li v-for="(item, index) in data" :key="index" :class="{ 'all-list': item.lyrics }">
+			<li v-for="(item, index) in data" :key="index" :class="{ 'all-list': item.lyrics }" @dblclick="setSelectMusicInfor(item)">
 				<div class="zz-table-list-item" :class="{ all: item.lyrics }">
 					<span class="number">{{ index | numberFormat }}</span>
 					<span class="handle">
@@ -78,10 +78,12 @@ export default {
 		// 字符串高亮匹配
         keywordsHighlight(str) {
 			const keywords = this.$route.query.keywords
-            if (keywords !== '') {
+            if (keywords != '' && keywords) {
                 const em = `<em>${keywords}</em>`
                 return str.replace(keywords, em)
-            }
+            } else {
+				return str
+			}
 		},
 		// 歌词格式化
 		lyricsFormat(val) {
@@ -136,6 +138,10 @@ export default {
 		// 歌词显示隐藏
 		setLyricsBtnText(state) {
 			return state ? '收起歌词' : '展开歌词'
+		},
+		// 播放音乐
+		setSelectMusicInfor(item) {
+			this.$emit('setSelectMusicInfor', item)
 		}
     }
 }

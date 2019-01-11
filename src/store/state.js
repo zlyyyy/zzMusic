@@ -1,10 +1,12 @@
 const state = {
-    banner: [],
-    personalized: [],
+    banner: [], // 轮播图
+    personalized: [], // 未登录推荐歌单
     player: {
         audio: null,
         playing: false,
-        musicInfor: []
+        musicInfor: [],
+        playlist: [],
+        historyList: []
     }
 }
 

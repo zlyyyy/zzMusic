@@ -83,20 +83,23 @@ const actions = {
 	setSearchSuggest( { commit, state }, keywords ) {
 		if (keywords !== '' ) {
 			getSearchSuggest(keywords).then( res => {
-				// 返回匹配结果
-				const _data = res.result
-				// 结果分类
-				const _order = _data.order
-				let suggest = []
-				// 数据拼接
-				_order.forEach((val, key) => {
-					const title = setTitle(_order[key])
-					const item = {
-						title,
-						children: _data[_order[key]]
-					}
-					suggest = [...suggest, item]
-				})
+				if (res.result.order) {
+					// 返回匹配结果
+					const _data = res.result
+					// 结果分类
+					const _order = _data.order
+					let suggest = []
+					// 数据拼接
+					_order.forEach((val, key) => {
+						const title = setTitle(_order[key])
+						const item = {
+							title,
+							children: _data[_order[key]]
+						}
+						suggest = [...suggest, item]
+					})
+					commit('SET_SEARCH_SUGGEST', suggest)
+				}
 				// 根据分类字段中文映射title
 				function setTitle(val) {
 					switch (val) {
@@ -112,7 +115,6 @@ const actions = {
 							return '歌单'
 					}
 				}
-				commit('SET_SEARCH_SUGGEST', suggest)
 			})
 		}
 	},

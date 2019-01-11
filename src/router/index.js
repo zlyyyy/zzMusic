@@ -8,12 +8,12 @@ export default new Router({
     routes: [
         {
             path: '/',
-            redirect: '/music'
+            redirect: '/discover'
         },
         {
-            path: '/music',
+            path: '/discover',
             component: () => import('../pages/music'),
-            redirect: '/music/index',
+            redirect: '/discover/index',
             meta: {
                 title: 'ZZ-music',
                 keepAlive: true
@@ -21,11 +21,29 @@ export default new Router({
             children: [
                 {
                     path: 'index',
-                    component: () => import('../pages/index/index'),
+                    component: () => import('../pages/discover/index/index'),
                     meta: {
-                        title: '搜索'
+                        title: '推荐'
                     }
                 },
+                {
+                    path: 'recommend/taste',
+                    component: () => import('../pages/discover/everyday/everyday'),
+                    meta: {
+                        title: '每日推荐'
+                    }
+                }
+            ]
+        },
+        {
+            path: '/music',
+            component: () => import('../pages/music'),
+            redirect: '/discover/index',
+            meta: {
+                title: 'ZZ-music',
+                keepAlive: true
+            },
+            children: [
                 {
                     path: 'search',
                     component: () => import('../pages/search/search'),

@@ -233,51 +233,6 @@ export default {
 					line-height: 40px;
 				}
 			}
-			.btns{
-				margin-bottom: 10px;
-				height: 30px;
-				.playall-btn{
-					border: 1px solid $main;
-					border-radius: 3px;
-					cursor: pointer;
-					@include wh(120px, 30px);
-					.i-play{
-						position: relative;
-						display: block;
-						float: left;
-						@include wh(20px, 20px);
-						border-radius: 50%;
-						border: 1px solid $main;
-						margin: 4px 0 0 10px;
-						i{
-							position: absolute;
-							left: 4px;
-							top: 1px;
-							@include sc(10px, $main);
-						}
-					}
-					.txt{
-						display: block;
-						float: left;
-						@include sc(12px, $main);
-						line-height: 30px;
-						padding: 0 5px;
-					}
-					.i-add{
-						position: relative;
-						display: block;
-						float: left;
-						@include wh(30px, 100%);
-						border-left: 1px solid $main;
-						i{
-							position: absolute;
-							top: 3px;
-							left: 7px;
-							@include sc(16px, $main);
-						}
-					}
-				}
-			}
 			.tags{
 				@include sc(12px, $font_first);
 				height: 26px;

@@ -11,7 +11,7 @@
                 <i class="iconfont icon-like like"></i>
                 <div class="info">
                     <span class="name" :title="musicInfor.name">{{ musicInfor.name }}</span>
-                    <span class="author" :title="musicInfor.singer">{{ musicInfor.singer }}</span>
+                    <span class="author">{{ musicInfor.singer | artistsFormat }}</span>
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
         <div class="music-style">
             <i class="iconfont icon-random"></i>
         </div>
-        <div class="music-list">
+        <div class="music-list" @click="setPlaylistStatus()">
             <i class="iconfont icon-list"></i>
         </div>
     </div>
@@ -60,13 +60,27 @@ export default {
         zzProgress
     },
     filters: {
+        // 播放时间格式化
         timeFormat(time) {
             let minute = Math.floor(time / 60)
             let second = Math.floor(time % 60)
             let _minute = minute < 10 ? '0' + minute : minute
             let _second = second < 10 ? '0' + second : second
             return `${_minute}:${_second}`
-        }
+        },
+        // 歌手格式化
+		artistsFormat(val) {
+			let _val
+			if (!val) {
+				return
+			}
+			val.forEach((ele, index) => {
+				if (ele.name != '') {
+					index > 0 ? _val += ` / ${ele.name}` : _val = ele.name
+				}
+			})
+			return _val
+		}
     },
     mounted() {
         this.$nextTick(() => {
@@ -80,6 +94,15 @@ export default {
                     this.musicLoad = _buffered / _duration
                 }
             }
+            // 开始播放音乐
+            // _audio.onplay = () => {
+            //     let timer
+            //     clearTimeout(timer)
+            //     timer = setTimeout(() => {
+            //         this.ready = true
+            //     }, 100)
+            //     console.log(1)
+            // }
             // 获取当前播放时间
             _audio.ontimeupdate = () => {
                 this.currentTime = this.audio.currentTime
@@ -88,10 +111,18 @@ export default {
     },
     watch: {
         // 播放、暂停控制
-        playing(newVal, oldVal) {
-            this.$nextTick(() => {
-                this.playing ? this.audio.play() : this.audio.pause()
-            })
+        playing: {
+            handler(newVal, oldVal) {
+                this.$nextTick(() => {
+                    newVal ? this.audio.play() : this.audio.pause()
+                    console.log(newVal)
+                    this.ready = true
+                })
+            }
+        },
+        musicInfor(newVal) {
+            this.audio.src = newVal.url
+            // this.audio.load()
         }
     },
     computed: {
@@ -115,6 +146,7 @@ export default {
     },
     data() {
         return {
+            ready: false, // 是否可使用
             currentTime: 0, // 实时播放时间
             musicLoad: 0, // 缓冲进度
             mute: false, // 是否静音
@@ -130,6 +162,9 @@ export default {
         }),
         // 播放、暂停控制
         play() {
+            if (!this.ready) {
+                return
+            }
             this.setPlaying()
         },
         // 设置播放时间
@@ -146,6 +181,10 @@ export default {
         setMute() {
             this.mute = !this.mute
             this.mute ? this.audio.volume = 0 : this.audio.volume = this.volume
+        },
+        // 播放列表开关
+        setPlaylistStatus(){
+            this.$emit('setPlaylistStatus')
         }
     }
 }
@@ -157,6 +196,7 @@ export default {
     @include wh(100%, 100px);
     box-sizing: border-box;
     border-top: 1px solid $border_first;
+    background: $white;
     position: absolute;
     bottom: 1px;
     .music-info{
@@ -313,6 +353,7 @@ export default {
         width: 30px;
         top: 30px;
         right: 20px;
+        cursor: pointer;
         .iconfont{
             @include sc(30px, $font_second);
         }

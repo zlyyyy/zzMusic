@@ -16,16 +16,20 @@
 			<div class="module-contain">
 				<zz-imglist>
 					<template slot="content">
-						<li class="img songs">
+						<router-link
+							tag="li"
+							class="img songs"
+							:to="{path: '/discover/recommend/taste'}"
+							>
 							<a href="/discover/recommend/taste" title="每日歌曲推荐" class="date">
-								<span class="head">星期四</span>
-								<span class="bd">27</span>
+								<span class="head">{{ '星期' + weekDay }}</span>
+								<span class="bd">{{ day }}</span>
 								<!-- <span class="mask"></span> -->
 							</a>
 							<a class="title" title="每日歌曲推荐" href="/discover/recommend/taste">
 								每日歌曲推荐
 							</a>
-						</li>
+						</router-link>
 						<li class="img songs" v-for="(item, index) in recData" v-if="index<4" :key="index">
 							<div class="cover">
 								<img :src="item.picUrl" />
@@ -49,7 +53,8 @@
 </template>
 
 <script>
-import zzImglist from '../../components/zzImglist/zzImglist'
+import zzImglist from '../../../components/zzImglist/zzImglist'
+import { day, weekDay } from '../../../utils/utils'
 import { mapGetters, mapState, mapActions } from 'vuex'
 
 export default {
@@ -64,7 +69,13 @@ export default {
 			// 获取slide
 			this.setBanner()
 			// 是否登录获取推荐歌单
-			this.loginStatus ? this.setRecommend() : this.setPersonalized()
+			if (this.loginStatus) {
+				// 用户每日推荐歌单
+				this.setRecommend()
+			} else {
+				// 未登录推荐歌单
+				this.setPersonalized()
+			}
 		})
 	},
 	components: {
@@ -81,6 +92,12 @@ export default {
 		}),
 		recData() {
 			return this.loginStatus ? this.recommend : this.personalized
+		},
+		day() {
+			return day()
+		},
+		weekDay() {
+			return weekDay()
 		}
 	},
 	data() {
@@ -104,7 +121,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-@import "../../style/mixin";
+@import "../../../style/mixin";
 .home{
 	overflow: hidden;
 	.module{
