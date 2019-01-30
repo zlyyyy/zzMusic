@@ -30,4 +30,10 @@ export default {
     height: 100%;
     overflow: hidden;
 }
+#music{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+}
 </style>

@@ -56,6 +56,7 @@
 				<zz-table
 					:data="playlist.result"
 					:columns="playlist.tableColumns"
+					@setSelectMusicInfor="setMusicInfor"
 				/>
 			</TabPane>
 		</Tabs>
@@ -136,7 +137,8 @@ export default {
 					artists: _artists,
 					album: {
 						id: ele.al.id,
-						name: ele.al.name
+						name: ele.al.name,
+						picUrl: ele.al.picUrl
 					},
 					duration: ele.dt
 				}
@@ -153,6 +155,9 @@ export default {
 		}
 	},
 	methods: {
+		...mapActions([
+            'setMusicInfor'
+        ]),
 		...mapActions('playlist', [
 			'setPlaylistDetail'
 		]),

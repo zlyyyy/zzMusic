@@ -35,7 +35,7 @@
 <script>
 import zzTable from '../../../components/zzTable/zzTable'
 import { day, weekDay } from '../../../utils/utils'
-import { mapGetters, mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
 	created() {

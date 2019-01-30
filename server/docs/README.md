@@ -95,17 +95,26 @@
 77. 热门评论
 78. 视频评论
 79. 退出登录
-80. 所有榜单内容摘要
-81. 收藏视频
-82. 收藏 MV
-83. 视频详情
-84. 相关视频
-85. 关注用户 
+80. 所有榜单
+81. 所有榜单内容摘要
+82. 收藏视频
+83. 收藏 MV
+84. 视频详情
+85. 相关视频
+86. 关注用户
+87. 新歌速递
+88. 喜欢音乐列表(无序)
+89. 收藏的 MV 列表
+90. 获取最新专辑
+91. 听歌打卡
+92. 获取视频标签下的视频
+93. 已收藏专辑列表
 
 ## 安装
 
 ```shell
 $ git clone git@github.com:Binaryify/NeteaseCloudMusicApi.git
+
 $ npm install
 ```
 
@@ -141,13 +150,15 @@ fetch(url).then(function() {
 // 结果
 // {"data":[{"id":33894312,"url":"http://m10.music.126.net/20180104125640/930a968b3fb04908b733506b3833e60b/ymusic/0fd6/4f65/43ed/a8772889f38dfcb91c04da915b301617.mp3","br":320000,"size":10691439,"md5":"a8772889f38dfcb91c04da915b301617","code":200,"expi":1200,"type":"mp3","gain":-2.0E-4,"fee":0,"uf":null,"payed":0,"flag":0,"canExtend":false}],"code": 200}
 ```
-## 更新到 v3.0 说明
-!>2018.10.14 更新到3.0.0,使用了模块化机制,因为部分接口参数和url做了调整,如还不想升级到3.0.0,请查看 [v2的文档](http://binaryify.github.io/NeteaseCloudMusicApi/#/v2), [更新日志](https://github.com/Binaryify/NeteaseCloudMusicApi/blob/master/CHANGELOG.MD), [2.0+下载地址](https://github.com/Binaryify/NeteaseCloudMusicApi/releases/tag/v2.20.5), 同时 2.0+ 将不再维护
+v3.3.0 后支持使用 PAC代理,如 `?proxy=http://192.168.0.1/proxy.pac`
 
+## 更新到 v3.0 说明
+
+!>2018.10.14 更新到 3.0.0,使用了模块化机制,因为部分接口参数和 url 做了调整,如还不想升级到 3.0.0,请查看 [v2 的文档](http://binaryify.github.io/NeteaseCloudMusicApi/#/v2), [更新日志](https://github.com/Binaryify/NeteaseCloudMusicApi/blob/master/CHANGELOG.MD), [2.0+下载地址](https://github.com/Binaryify/NeteaseCloudMusicApi/releases/tag/v2.20.5), 同时 2.0+ 将不再维护
 
 ## Docker 容器运行
 
-> 注意: 在 docker 中运行的时候, 由于使用了 request 来发请求, 所以会检查几个proxy 相关的环境变量(如下所列), 这些环境变量 会影响到 request 的代理, 详情请参考[request 的文档](https://github.com/request/request#proxies), 如果这些环境变量 指向的代理不可用, 那么就会造成错误, 所以在使用 docker 的时候一定要注意这些环境变量. 不过, 要是你在 query 中加上了 proxy 参数, 那么环境变量会被覆盖, 就会用你通过 proxy 参数提供的代理了.
+> 注意: 在 docker 中运行的时候, 由于使用了 request 来发请求, 所以会检查几个 proxy 相关的环境变量(如下所列), 这些环境变量 会影响到 request 的代理, 详情请参考[request 的文档](https://github.com/request/request#proxies), 如果这些环境变量 指向的代理不可用, 那么就会造成错误, 所以在使用 docker 的时候一定要注意这些环境变量. 不过, 要是你在 query 中加上了 proxy 参数, 那么环境变量会被覆盖, 就会用你通过 proxy 参数提供的代理了.
 
 request 相关的环境变量
 
@@ -159,18 +170,29 @@ request 相关的环境变量
 6. NO_PROXY
 
 ```shell
-docker pull twesix/netease-cloud-music
-docker run -d -p 3000:3000 --name netease-cloud-music twesix/netease-music-api
+docker pull binaryify/netease_cloud_music_api
+
+docker run -d -p 3000:3000 --name netease_cloud_music_api    binaryify/netease_cloud_music_api
+
+
+// 或者 
+docker run -d -p 3000:3000 binaryify/netease_cloud_music_api
 
 // 去掉或者设置相关的环境变量
-docker run -d -p 3000:3000 --name netease-cloud-music -e http_proxy= -e https_proxy= -e no_proxy= -e HTTP_PROXY= -e HTTPS_PROXY= -e NO_PROXY= netease-cloud-music
+
+docker run -d -p 3000:3000 --name netease_cloud_music_api -e http_proxy= -e https_proxy= -e no_proxy= -e HTTP_PROXY= -e HTTPS_PROXY= -e NO_PROXY= binaryify/netease_cloud_music_api
+
+// 或者
+docker run -d -p 3000:3000 -e http_proxy= -e https_proxy= -e no_proxy= -e HTTP_PROXY= -e HTTPS_PROXY= -e NO_PROXY= binaryify/netease_cloud_music_api
 ```
 
-> 由于 docker 镜像更新不是很及时,推荐自己 build, 以下为 build 镜像的方式
+> 以下是自行 build docker 镜像方式
 
 ```
 $ git clone https://github.com/Binaryify/NeteaseCloudMusicApi && cd NeteaseCloudMusicApi
+
 $ sudo docker build . -t netease-music-api
+
 $ sudo docker run -d -p 3000:3000 netease-music-api
 ```
 
@@ -180,7 +202,7 @@ $ sudo docker run -d -p 3000:3000 netease-music-api
 
 !> 为使用方便,降低门槛,登录接口直接使用了 get 明文请求,请按实际需求对源码修改
 
-!> 由于接口做了缓存处理 ( 缓存 2 分钟 , 可在 app.js 设置 , 可能会导致登陆后获取不
+!> 由于接口做了缓存处理 ( 缓存 2 分钟,不缓存数据极容易引起网易服务器高频ip错误 , 可在 app.js 设置 , 可能会导致登陆后获取不
 到 cookie), 相同的 url 会在两分钟内只向网易服务器发一次请求 , 如果遇到不需要缓
 存结果的接口 , 可在请求 url 后面加一个时间戳参数使 url 不同 , 例子 :
 `/simi/playlist?id=347230&timestamp=1503019930000`
@@ -207,6 +229,8 @@ $ sudo docker run -d -p 3000:3000 netease-music-api
 **必选参数 :** `phone`: 手机号码 `password`: 密码
 
 **接口地址 :** `/login/cellphone`
+
+**可选参数 :** `countrycode`: 国家码，用于国外手机号登陆，例如美国传入：`1`
 
 **调用例子 :** `/login/cellphone?phone=xxx&password=yyy`
 
@@ -278,10 +302,15 @@ Cookies
 
 ```
 gender: 性别 0:保密 1:男性 2:女性
+
 birthday: 出生日期,时间戳 unix timestamp
+
 nickname: 用户昵称
+
 province: 省份id
+
 city: 城市id
+
 signature：用户签名
 ```
 
@@ -309,8 +338,11 @@ signature：用户签名
 
 ```
 id:歌单id
-name:歌单名字
+
+name:歌单名字=
+
 desc:歌单描述
+
 tags:歌单tag
 ```
 
@@ -367,6 +399,7 @@ tags:歌单tag
 **必选参数 :** `uid` : 用户 id
 
 **可选参数 :**
+
 `limit` : 返回数量 , 默认为 30
 
 `offset` : 偏移数量，用于分页 , 如
@@ -405,9 +438,9 @@ tags:歌单tag
 
 **必选参数 :**
 
- `id` : 用户 id
+`id` : 用户 id
 
- `t` : `1`为关注,其他为取消关注  
+`t` : `1`为关注,其他为取消关注
 
 **接口地址 :** `/follow`
 
@@ -441,6 +474,7 @@ tags:歌单tag
 说明 : 调用此接口,可获取歌手分类列表
 **必选参数 :** `cat` : 即 category Code,歌手类型,默认 1001,返回华语男歌手数据
 **可选参数 :**
+
 `limit` : 返回数量 , 默认为 30
 
 `offset` : 偏移数量，用于分页 , 如
@@ -451,20 +485,35 @@ category Code 取值:
 
 ```
 入驻歌手 5001
+
 华语男歌手 1001
+
 华语女歌手 1002
+
 华语组合/乐队 1003
+
 欧美男歌手 2001
+
 欧美女歌手 2002
+
 欧美组合/乐队 2003
+
 日本男歌手 6001
+
 日本女歌手 6002
+
 日本组合/乐队 6003
+
 韩国男歌手 7001
+
 韩国女歌手 7002
+
 韩国组合/乐队 7003
+
 其他男歌手 4001
+
 其他女歌手 4002
+
 其他组合/乐队 4003
 ```
 
@@ -477,19 +526,17 @@ category Code 取值:
 
 ### 收藏/取消收藏歌手
 
-说明 : 调用此接口,可收藏歌手  
+说明 : 调用此接口,可收藏歌手
 
-**必选参数 :**  
+**必选参数 :**
 
- `artistId` : 歌手 id  
+`artistId` : 歌手 id
 
- `t`:操作,1为收藏,其他为取消收藏
-
+`t`:操作,1 为收藏,其他为取消收藏
 
 **接口地址 :** `/artist/sub`
 
 **调用例子 :** `/artist/sub?id=6452&t=1`
-
 
 ### 收藏的歌手列表
 
@@ -503,7 +550,7 @@ category Code 取值:
 
 说明 : 调用此接口,可收藏视频
 
-**必选参数 :**   
+**必选参数 :**
 
 `id` : 视频 id
 
@@ -511,14 +558,13 @@ category Code 取值:
 
 **接口地址 :** `/video/sub`
 
-
 **调用例子 :** `/video/sub`
 
 ### 收藏 MV
 
 说明 : 调用此接口,可收藏 MV
 
-**必选参数 :**   
+**必选参数 :**
 
 `id` : MV id
 
@@ -527,6 +573,14 @@ category Code 取值:
 **接口地址 :** `/mv/sub`
 
 **调用例子 :** `/mv/sub`
+
+### 收藏的 MV 列表
+
+说明 : 调用此接口,可获取收藏的 MV 列表
+
+**接口地址 :** `/mv/sublist`
+
+**调用例子 :** `/mv/sublist`
 
 ### 歌单分类
 
@@ -561,7 +615,9 @@ category Code 取值:
 返回数据如下图 :
 
 ![精选碟](https://raw.githubusercontent.com/Binaryify/NeteaseCloudMusicApi/master/static/top_playlist.png)
+
 ![对应位置](https://ws2.sinaimg.cn/large/006tKfTcgy1fr3wnpyg6jj317e0vcqdc.jpg)
+
 ![返回数据](https://ws4.sinaimg.cn/large/006tKfTcgy1fr3wqs5lw9j31ic1re4c4.jpg)
 
 ### 获取精品歌单
@@ -612,7 +668,7 @@ category Code 取值:
 
 > 注 : 部分用户反馈获取的 url 会 403,[hwaphon](https://github.com/hwaphon)找到的
 > 解决方案是当获取到音乐的 id 后，将
-> http://music.163.com/song/media/outer/url?id=id.mp3 以 src 赋予 Audio 即可播放
+> https://music.163.com/song/media/outer/url?id=id.mp3 以 src 赋予 Audio 即可播放
 
 **必选参数 :** `id` : 音乐 id
 
@@ -673,18 +729,11 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 
 **必选参数 :** `keywords` : 关键词
 
-**可选参数 :**
-`limit` : 返回数量 , 默认为 30
-
-`offset` : 偏移数量，用于分页 , 如
-: 如 :( 页数 -1)\*30, 其中 30 为 limit 的值 , 默认为 0
-
-`type`: 搜索类型；默认为 1 即单曲 , 取值意义 : 1: 单曲 10: 专辑 100: 歌手 1000:
-歌单 1002: 用户 1004: MV 1006: 歌词 1009: 电台
+**可选参数 :** `type` : 如果传 'mobile' 则返回移动端数据
 
 **接口地址 :** `/search/suggest`
 
-**调用例子 :** `/search/suggest?keywords= 海阔天空`
+**调用例子 :** `/search/suggest?keywords= 海阔天空` `/search/suggest?keywords= 海阔天空&type=mobile`
 
 ### 搜索多重匹配
 
@@ -714,6 +763,7 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 说明 : 调用此接口 , 传入类型和歌单 id 可收藏歌单或者取消收藏歌单
 
 **必选参数 :**
+
 `t` : 类型,1:收藏,2:取消收藏
 `id` : 歌单 id
 
@@ -729,6 +779,7 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 说明 : 调用此接口 , 可以添加歌曲到歌单或者从歌单删除某首歌曲 ( 需要登录 )
 
 **必选参数 :**
+
 `op`: 从歌单增加单曲为 add, 删除为 del
 
 `pid`: 歌单 id
@@ -750,6 +801,30 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 
 返回数据如下图 :
 ![获取歌词](https://raw.githubusercontent.com/Binaryify/NeteaseCloudMusicApi/master/static/%E6%AD%8C%E8%AF%8D.png)
+
+### 新歌速递
+
+说明 : 调用此接口 , 可获取新歌速递
+
+**必选参数 :**
+
+`type`: 地区类型 id,对应以下:
+
+```
+全部:0
+
+华语:7
+
+欧美:96
+
+日本:8
+
+韩国:16
+```
+
+**接口地址 :** `/top/song`
+
+**调用例子 :** `/top/song?type=96`
 
 ### 歌曲评论
 
@@ -856,10 +931,15 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 
 ```
 0: 歌曲
+
 1: mv
+
 2: 歌单
+
 3: 专辑
+
 4: 电台
+
 5: 视频
 ```
 
@@ -882,10 +962,15 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 
 ```
 0: 歌曲
+
 1: mv
+
 2: 歌单
+
 3: 专辑
+
 4: 电台
+
 5: 视频
 ```
 
@@ -902,16 +987,22 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 1. 发送评论
 
    **必选参数**
+
    `t`:1 发送
 
    `tpye`: 数字,资源类型,对应歌曲,mv,专辑,歌单,电台,视频对应以下类型
 
    ```
    0: 歌曲
+
    1: mv
+
    2: 歌单
+
    3: 专辑
+
    4: 电台
+
    5: 视频
    ```
 
@@ -924,16 +1015,23 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 2. 删除评论
 
    **必选参数**
+
    `t`:0 删除
 
    `tpye`: 数字,资源类型,对应歌曲,mv,专辑,歌单,电台,视频对应以下类型
 
    ```
    0: 歌曲
+
    1: mv
+
    2: 歌单
+
    3: 专辑
+
    4: 电台
+
+
    5: 视频
    ```
 
@@ -941,11 +1039,12 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
    `content` :内容 id,可通过 `/comment/mv` 等接口获取
 
    **调用例子** : `/comment?t=0&type=1&id=5436712&commentId=1535550516319` (在广岛之恋 mv 删除评论)
+    ```
+
 
 ### banner
 
-说明 : 调用此接口 , 可获取 banner( 轮播图 ) 数据注 : 因参数未知 , 只能获取比较旧
-的数据 , 如果有知道参数的小伙伴 , 可提交 PR
+说明 : 调用此接口 , 可获取 banner( 轮播图 ) 数据
 
 **接口地址 :** `/banner`
 
@@ -953,20 +1052,23 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 
 ### 资源点赞( MV,电台,视频)
 
-说明 : 调用此接口 , 可对 MV,电台,视频点赞  
+说明 : 调用此接口 , 可对 MV,电台,视频点赞
 
-**必选参数 :** 
+**必选参数 :**
 
 `type`:资源类型,对应以下类型
+
 ```
 1: mv
+
 4: 电台
+
 5: 视频
 ```
 
-`t`: 操作,1为点赞,其他未取消点赞
+`t`: 操作,1 为点赞,其他未取消点赞
 
-`id`: 资源id
+`id`: 资源 id
 
 **接口地址 :** `/resource/like`
 
@@ -997,6 +1099,19 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 
 返回数据如下图 :
 ![获取专辑内容](https://raw.githubusercontent.com/Binaryify/NeteaseCloudMusicApi/master/static/%E4%B8%93%E8%BE%91.png)
+
+### 获取已收藏专辑列表
+说明 : 调用此接口 , 可获得已收藏专辑列表
+
+**可选参数 :**  
+`limit`: 取出数量 , 默认为 25
+
+`offset`: 偏移数量 , 用于分页 , 如 :( 页数 -1)\*25, 其中 25 为 limit 的值 , 默认
+为 0
+
+**接口地址 :** `/album/sublist`
+
+**调用例子 :** `/album/sublist` ( 周杰伦 )
 
 ### 获取歌手单曲
 
@@ -1172,6 +1287,16 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 
 ![喜欢成功截图](https://raw.githubusercontent.com/Binaryify/NeteaseCloudMusicApi/master/static/likeSuccess.png)
 
+### 喜欢音乐列表
+
+说明 : 调用此接口 , 传入用户 id, 可获取已喜欢音乐id列表(id数组)
+
+**必选参数 :** `uid`: 用户 id
+
+**接口地址 :** `/likelist`
+
+**调用例子 :** `/likelist?uid=32953014`
+
 ### 垃圾桶
 
 说明 : 调用此接口 , 传入音乐 id, 可把该音乐从私人 FM 中移除至垃圾桶
@@ -1203,6 +1328,26 @@ mp3url 不能直接用 , 可通过 `/song/url` 接口传入歌曲 id 获取具�
 返回数据如下图 :
 
 ![新碟上架](https://raw.githubusercontent.com/Binaryify/NeteaseCloudMusicApi/master/static/new_albums.png)
+
+### 最新专辑
+
+说明 : 调用此接口 ，获取云音乐首页新碟上架数据
+
+**接口地址 :** `/album/newest`
+
+**调用例子 :** `/likelist?uid=32953014`
+
+### 听歌打卡
+
+说明 : 调用此接口 , 传入音乐 id, 来源 id，歌曲时间 time，更新听歌排行数据
+
+**必选参数 :** `id`: 歌曲 id, `sourceid`: 歌单或专辑 id
+
+**可选参数 :** `time`: 歌曲播放时间
+
+**接口地址 :** `/scrobble`
+
+**调用例子 :** `/scrobble?id=482369360&&sourceid=35571977`
 
 ### 热门歌手
 
@@ -1317,9 +1462,11 @@ MV 数据 , 数据包含 mv 名字 , 歌手 , 发布时间 , mv 视频地址等�
 **接口地址 :** `/mv/url`
 
 **调用例子 :**
+
 `/mv/url?id=5436712`
 
 ### 相关视频
+
 说明 : 调用此接口 , 可获取相关视频
 
 **必选参数 :** `id`: 视频 的 id
@@ -1329,6 +1476,7 @@ MV 数据 , 数据包含 mv 名字 , 歌手 , 发布时间 , mv 视频地址等�
 **调用例子 :** `/related/allvideo?id=89ADDE33C0AAE8EC14B99F6750DB954D`
 
 ### 视频详情
+
 说明 : 调用此接口 , 可获取相关视频
 
 **必选参数 :** `id`: 视频 的 id
@@ -1339,8 +1487,7 @@ MV 数据 , 数据包含 mv 名字 , 歌手 , 发布时间 , mv 视频地址等�
 
 ### 获取视频数据
 
-说明 : 调用此接口 , 传入视频的 id ( 在搜索音乐的时候传 type=1014 获得 ) , 可获取对应
-视频数据,其中视频网易做了防盗链处理 , 可能不能直接播放 , 需要播放的话需要调用 ' 播放 mv/视频' 接口
+说明 : 调用此接口 , 传入视频 id,可获取视频播放地址
 
 **必选参数 :** `id`: 视频 的 id
 
@@ -1353,6 +1500,16 @@ MV 数据 , 数据包含 mv 名字 , 歌手 , 发布时间 , mv 视频地址等�
 ![视频数据](https://ws1.sinaimg.cn/large/006tNbRwgy1fuqdv10p5rj31kw0da76y.jpg)
 
 
+### 获取视频标签下的视频
+说明 : 调用此接口 , 传入`videoGroupId`,可获取到相关的视频。  
+
+**必选参数 :** `传入videoGroupId`: videoGroup 的 id
+
+**接口地址 :** `/video/group`
+
+**调用例子 :** `/video/group?id=9104`
+
+
 ### 排行榜
 
 说明 : 调用此接口 , 传入数字 idx, 可获取不同排行榜
@@ -1361,28 +1518,51 @@ MV 数据 , 数据包含 mv 名字 , 歌手 , 发布时间 , mv 视频地址等�
 
 ```
 "0": 云音乐新歌榜,
+
 "1": 云音乐热歌榜,
+
 "2": 网易原创歌曲榜,
+
 "3": 云音乐飙升榜,
+
 "4": 云音乐电音榜,
+
 "5": UK排行榜周榜,
+
 "6": 美国Billboard周榜
+
 "7": KTV嗨榜,
+
 "8": iTunes榜,
+
 "9": Hit FM Top榜,
+
 "10": 日本Oricon周榜
+
 "11": 韩国Melon排行榜周榜,
+
 "12": 韩国Mnet排行榜周榜,
+
 "13": 韩国Melon原声周榜,
+
 "14": 中国TOP排行榜(港台榜),
+
 "15": 中国TOP排行榜(内地榜)
+
 "16": 香港电台中文歌曲龙虎榜,
+
 "17": 华语金曲榜,
+
 "18": 中国嘻哈榜,
+
 "19": 法国 NRJ EuroHot 30周榜,
+
 "20": 台湾Hito排行榜,
+
 "21": Beatport全球电子舞曲榜,
+
 "22": 云音乐ACG音乐榜,
+
 "23": 云音乐嘻哈榜
 ```
 
@@ -1394,7 +1574,15 @@ MV 数据 , 数据包含 mv 名字 , 歌手 , 发布时间 , mv 视频地址等�
 
 ![排行榜](https://raw.githubusercontent.com/Binaryify/NeteaseCloudMusicApi/master/static/top_list.png)
 
+### 所有榜单
+
+说明 : 调用此接口,可获取所有榜单
+**接口地址 :** `/toplist`
+
+**调用例子 :** `/toplist`
+
 ### 所有榜单内容摘要
+
 说明 : 调用此接口,可获取所有榜单内容摘要
 **接口地址 :** `/toplist/detail`
 
@@ -1492,10 +1680,13 @@ type='1009' 获取其 id, 如`/search?keywords= 代码时间 &type=1009`
 **必选参数 :** `rid`: 电台 的 id
 
 **可选参数 :**
+
 `limit` : 返回数量 , 默认为 30
 
 `offset` : 偏移数量，用于分页 , 如
 : 如 :( 页数 -1)\*30, 其中 30 为 limit 的值 , 默认为 0
+
+`asc` : 排序方式,默认为 `false` (新 => 老 ) 设置 `true` 可改为 老 => 新 
 
 **接口地址 :** `/dj/program`
 

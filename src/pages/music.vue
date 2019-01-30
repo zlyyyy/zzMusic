@@ -1,6 +1,10 @@
 <template>
     <div class="music">
         <z-head></z-head>
+        <template v-if="routePath == '/music/song'">
+            <div class="z-bg" :style="{'background-image':'url('+musicInfor.image+')'}"></div>
+            <div class="z-bg-mask"></div>
+        </template>
         <div class="z-content">
             <div class="z-slider">
                 <nav-bar></nav-bar>
@@ -10,7 +14,11 @@
             </div>
         </div>
         <div class="z-foot">
-            <z-player @setPlaylistStatus="setPlaylistStatus"></z-player>
+            <z-player
+                @setPlaylistStatus="setPlaylistStatus"
+                @prevPlay="prevPlay"
+                @nextPlay="nextPlay"
+            ></z-player>
         </div>
         <div class="player-playlist" v-if="playlistStatus">
             <div class="list-menu">
@@ -70,6 +78,11 @@ export default {
         Login,
         zzTable
     },
+    watch: {
+        playlist(newVal, oldVal) {
+            // console.log(newVal)
+        }
+    },
     computed: {
         ...mapGetters([
             'musicInfor',
@@ -78,6 +91,9 @@ export default {
         ]),
         listData() {
             return this.active == 0 ? this.playlist : this.historyList
+        },
+        routePath() {
+            return this.$route.path
         }
     },
     data() {
@@ -95,12 +111,36 @@ export default {
             'setMusicInfor',
             'setHistoryList'
         ]),
+        // 获取历史播放列表并设置
         getHistoryList() {
             let list = JSON.parse(locs.get('history_list'))
             this.setHistoryList(list)
         },
+        // 播放列表显示隐藏
         setPlaylistStatus() {
             this.playlistStatus = !this.playlistStatus
+        },
+        // 上一首
+        prevPlay(index) {
+            let _music
+            // 判断是否是第一首
+            if (index != -1) {
+                _music = this.playlist[index]
+            } else {
+                _music = this.playlist[this.playlist.length - 1]
+            }
+            this.setMusicInfor(_music)
+        },
+        // 下一首
+        nextPlay(index) {
+            let _music
+            // 判断是否是最后一首
+            if (index != this.playlist.length) {
+                _music = this.playlist[index]
+            } else {
+                _music = this.playlist[0]
+            }
+            this.setMusicInfor(_music)
         }
     }
 }
@@ -116,7 +156,27 @@ export default {
         @include wh(100%, 60px);
         background: $main;
     }
+    .z-bg-mask{
+        position: absolute;
+        top: 0;
+        z-index: 1;
+        @include wh(100%, 100%);
+        background-color: rgba(0,0,0,.35);
+    }
+    .z-bg{
+        position: absolute;
+        top: 0;
+        z-index: 2;
+        @include wh(100%, 100%);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: 50%;
+        filter: blur(65px);
+        opacity: .6;
+    }
     .z-content{
+        position: relative;
+        z-index: 3;
         display: flex;
         @include wh(100%, calc(100% - 160px));
         .z-slider{
@@ -177,6 +237,7 @@ export default {
     .z-foot{
         position: absolute;
         bottom: 0;
+        z-index: 3;
         @include wh(100%, 100px);
     }
     .player-playlist{

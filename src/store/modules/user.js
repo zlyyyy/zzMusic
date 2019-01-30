@@ -35,9 +35,9 @@ const mutations = {
 
 const actions = {
 	// 用户信息
-	setLoginInfor( { commit, state }, data ) {
+	setLoginInfor( { commit, state }, {data, status} ) {
         let _data = {
-            loginStatus: true,
+            loginStatus: status,
             account: data.account,
             bindings: data.bindings,
             profile: data.profile
@@ -118,6 +118,17 @@ const actions = {
             })
             commit('SET_RECOMMEND_SONGS', _data)
         })
+    },
+    // 退出登录
+    setLoginOut( { dispatch, commit, state } ) {
+        // 重置登录信息
+        dispatch('setLoginInfor', {
+            data: [],
+            status: false
+        })
+        // 重置歌单信息
+        commit('SET_PLAYLIST_SET', [])
+        commit('SET_PLAYLIST_COLLECT', [])
     }
 }
 

@@ -7,6 +7,7 @@
 					v-if="type == 1 && searchData.songs.result"
 					:data="searchData.songs.result"
 					:columns="searchData.songs.tableColumns"
+					@setSelectMusicInfor="setMusicInfor"
 				/>
 				<div class="errNote" v-if="type == 1 && !searchData.songs.result" v-html="errNote"></div>
 			</TabPane>
@@ -69,6 +70,7 @@
 					:data="searchData.lyrics.result"
 					:columns="searchData.lyrics.tableColumns"
 					@setLyricsShow="setLyricsShow"
+					@setSelectMusicInfor="setMusicInfor"
 				/>
 				<div class="errNote" v-if="type == 1006 && !searchData.lyrics.result" v-html="errNote"></div>
 			</TabPane>
@@ -200,9 +202,13 @@ export default {
 							const _ele = {
 								name: ele.name,
 								id: ele.id,
-								artists: ele.artists,
-								album: ele.album,
-								duration: ele.duration
+								artists: ele.ar,
+								album: {
+									id: ele.al.id,
+									name: ele.al.name,
+									picUrl: ele.al.picUrl
+								},
+								duration: ele.dt
 							}
 							_data = [..._data, _ele]
 						})
@@ -334,9 +340,9 @@ export default {
 							const _ele = {
 								name: ele.name,
 								id: ele.id,
-								artists: ele.artists,
-								album: ele.album,
-								duration: ele.duration,
+								artists: ele.ar,
+								album: ele.al,
+								duration: ele.dt,
 								lyrics: ele.lyrics,
 								lyricsShow: false
 							}
@@ -420,7 +426,10 @@ export default {
 	methods: {
 		...mapMutations('search', {
             setSearchKeywords: 'SET_SEARCH_KEYWORDS'
-        }),
+		}),
+		...mapActions([
+            'setMusicInfor'
+        ]),
 		...mapActions('search', [
 			'setSearchResult'
 		]),

@@ -1,12 +1,16 @@
 <template>
     <div class="music-bar">
         <div class="music-info">
-            <div class="music-img">
+            <router-link
+                class="music-img"
+                tag="div"
+                :to="{path:'/music/song', query: { id: musicInfor.id }}"
+            >
                 <div class="more-info">
                     <i class="iconfont icon-full"></i>
                 </div>
                 <img :src="musicInfor.image" />
-            </div>
+            </router-link>
             <div class="music-name">
                 <i class="iconfont icon-like like"></i>
                 <div class="info">
@@ -16,13 +20,13 @@
             </div>
         </div>
         <div class="music-btn">
-            <span class="btn-prev">
+            <span class="btn-prev" @click="prevPlay()">
                 <i class="iconfont icon-prev"></i>
             </span>
             <span class="btn-play" @click="play()">
                 <i class="iconfont icon-play2" :class="{'icon-playing2':playing}"></i>
             </span>
-            <span class="btn-next">
+            <span class="btn-next" @click="nextPlay()">
                 <i class="iconfont icon-next"></i>
             </span>
         </div>
@@ -106,6 +110,7 @@ export default {
             // 获取当前播放时间
             _audio.ontimeupdate = () => {
                 this.currentTime = this.audio.currentTime
+                this.setStateCurrentTime(this.audio.currentTime)
             }
         })
     },
@@ -115,7 +120,7 @@ export default {
             handler(newVal, oldVal) {
                 this.$nextTick(() => {
                     newVal ? this.audio.play() : this.audio.pause()
-                    console.log(newVal)
+                    // console.log(newVal)
                     this.ready = true
                 })
             }
@@ -123,6 +128,10 @@ export default {
         musicInfor(newVal) {
             this.audio.src = newVal.url
             // this.audio.load()
+        },
+        // 自动播放下一首
+        musicPercent(newVal) {
+            newVal >= 1 ? this.nextPlay() : null
         }
     },
     computed: {
@@ -158,7 +167,8 @@ export default {
             'setSearchHot'
         ]),
         ...mapMutations({
-            setPlaying: 'SET_PLAYING'
+            setPlaying: 'SET_PLAYING',
+            setStateCurrentTime: 'SET_CURRENT_TIME'
         }),
         // 播放、暂停控制
         play() {
@@ -183,8 +193,16 @@ export default {
             this.mute ? this.audio.volume = 0 : this.audio.volume = this.volume
         },
         // 播放列表开关
-        setPlaylistStatus(){
+        setPlaylistStatus() {
             this.$emit('setPlaylistStatus')
+        },
+        // 上一首
+        prevPlay() {
+            this.$emit('prevPlay', this.musicInfor._index - 1)
+        },
+        // 下一首
+        nextPlay() {
+            this.$emit('nextPlay', this.musicInfor._index + 1)
         }
     }
 }
@@ -224,7 +242,7 @@ export default {
                 background: rgba(0, 0, 0, .2);
                 .iconfont{
                     position: relative;
-                    top: 7px;
+                    top: -5px;
                     left: 10px;
                     @include sc(60px, $white);
                     opacity: .5;

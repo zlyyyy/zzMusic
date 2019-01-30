@@ -18,9 +18,27 @@ const mutations = {
     [ types.SET_PLAYING ]( state, data ) {
         state.player.playing = (data ? data : !state.player.playing)
     },
+    [ types.SET_CURRENT_TIME ]( state, data ) {
+        state.player.currentTime = data
+    },
     // 当前播放音乐信息
     [ types.SET_PLAYER_MUSIC_INFOR ]( state, music ) {
+        // console.log(music)
+        // 加入播放列表
+        let _music = music
+        // 判断添加的音乐是否已存在
+        let _filterResult = state.player.playlist.filter( v => v.id == _music.id)
+        // console.log(_filterResult)
+        if (_filterResult.length == 0) {
+            // 播放列表下标添加
+            _music._index = state.player.playlist.length
+            state.player.playlist = [...state.player.playlist, _music]
+        } else {
+            _music = _filterResult[0]
+        }
+        // 设置播放器当前音乐信息
         const _infor = {
+            _index: _music._index,
             id: music.id,
             name: music.name,
             singer: music.artists,

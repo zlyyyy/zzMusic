@@ -116,18 +116,26 @@ export default {
 			console.log(resultVal)
 			return resultVal
 		},
+		// lyricsFormat2(val) {
+		// 	console.log(val)
+		// 	let keywords
+		// 	let first
+		// 	let second
+		// 	val.range.forEach(item => {
+		// 		first = item.first
+		// 		second = item.second
+		// 		keywords = val.txt.substring(first, second)
+		// 	})
+		// 	let _val = val.txt.substring(first).replace(/\n/g, '<br />' )
+		// 	let em = `<em>${keywords}</em>`
+		// 	let resultVal = _val.replace(keywords, em)
+		// 	return resultVal
+		// },
 		lyricsFormat2(val) {
-			let keywords
-			let first
-			let second
-			val.range.forEach(item => {
-				first = item.first
-				second = item.second
-				keywords = val.txt.substring(first, second)
+			let resultVal = ''
+			val.forEach(item => {
+				resultVal += `${item}<br />`
 			})
-			let _val = val.txt.substring(first).replace(/\n/g, '<br />' )
-			let em = `<em>${keywords}</em>`
-			let resultVal = _val.replace(keywords, em)
 			return resultVal
 		},
 		// 歌词显示隐藏
@@ -241,7 +249,7 @@ export default {
 						width: calc((100% - 140px) / 3);
 						height: 100%;
 						overflow: hidden;
-						em{
+						b{
 							font-style: normal;
 							color: $main;
 						}

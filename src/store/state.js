@@ -4,6 +4,7 @@ const state = {
     player: {
         audio: null,
         playing: false,
+        currentTime: 0,
         musicInfor: [],
         playlist: [],
         historyList: []

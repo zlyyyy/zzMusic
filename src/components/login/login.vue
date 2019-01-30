@@ -92,11 +92,10 @@ export default {
         }
     },
     methods: {
-        ...mapActions([
-            'setLoginPhone'
-        ]),
         ...mapActions('user', [
-            'setLoginInfor'
+            'setLoginInfor',
+            'setRecommend',
+            'setUserPlaylist'
         ]),
         handleSubmit(name) {
             this.$refs[name].validate((valid) => {
@@ -114,7 +113,14 @@ export default {
                             this.loginState = false
                             this.$Message.success('登录成功!')
                             // 设置登录用户信息
-                            this.setLoginInfor(res)
+                            this.setLoginInfor({
+                                data: res,
+                                status: true
+                            })
+                            // 获取用户每日推荐歌单
+                            this.setRecommend()
+                            // 获取用户歌单
+                            this.setUserPlaylist()
                         }
                     }).catch(err => {
                         this.loading = false

@@ -9,6 +9,10 @@ export function getLoginPhone (data) {
         }
     })
 }
+//  退出登录
+export function loginOut (data) {
+    return http.get('/logout')
+}
 //  获取登录状态
 export function getLoginStatus () {
     return http.get('/login/status')
@@ -43,6 +47,14 @@ export function getMusicInfor (ids) {
     return http.get('/song/detail', {
         params: {
             ids
+        }
+    })
+}
+//  获取歌曲详情
+export function getMusicLyric (id) {
+    return http.get('/lyric', {
+        params: {
+            id
         }
     })
 }

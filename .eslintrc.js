@@ -34,6 +34,7 @@ module.exports = {
 		"eqeqeq": "off",//必须使用全等，off关闭
 		'no-unneeded-ternary': 0,// 允许三目运算中使用布尔值
 		"no-unused-expressions": 0,//短路求值和三目运算都允许
-		"vue/no-parsing-error": [2, { "x-invalid-end-tag": false }]//iView将标签渲染为原生html标签时，由于这些标签是自闭合的，所以有end标签会报错。
+		"vue/no-parsing-error": [2, { "x-invalid-end-tag": false }],//iView将标签渲染为原生html标签时，由于这些标签是自闭合的，所以有end标签会报错。
+		"no-useless-escape": "off" //不允许在字符串和正则表达式中使用无意义的换行符
 	}
 }

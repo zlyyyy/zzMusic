@@ -15,7 +15,7 @@
         <div class="nav-con">
             <span v-if="!loginStatus" class="login" @click="loginShow = true">登录</span>
             <div class="user-infor" v-if="loginStatus">
-                <Dropdown class="user-dropdown" trigger="click">
+                <Dropdown class="user-dropdown" trigger="click" :transfer="true" @on-click="dropClick">
                     <a href="javascript:void(0)" >
                         <div class="avatar">
                             <img class="" :src="profile.avatarUrl" />
@@ -26,13 +26,13 @@
                         <Icon class="arrow-down" type="ios-arrow-down"></Icon>
                     </a>
                     <DropdownMenu slot="list" class="infor">
-                        <DropdownItem>
+                        <DropdownItem name="个人主页">
                             <Icon type="md-person" />
-                            个人主页
+                            <span>个人主页</span>
                         </DropdownItem>
-                        <DropdownItem>
+                        <DropdownItem name="退出登录">
                             <Icon type="md-power" />
-                            退出登录
+                            <span>退出登录</span>
                         </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
@@ -43,7 +43,8 @@
 </template>
 
 <script>
-import { getLoginStatus } from '../../api'
+import { loginOut, getLoginStatus } from '../../api'
+import locs from '../../utils/locs'
 import SearchInput from '../searchInput/searchInput'
 import Login from '../login/login'
 import { mapState, mapActions } from 'vuex'
@@ -73,14 +74,25 @@ export default {
     },
     methods: {
         ...mapActions([
-            'setLoginPhone',
+            'setPersonalized',
             'setMusicInfor'
         ]),
+        ...mapActions('user', [
+            'setLoginOut'
+        ]),
+        // 登录窗口显示隐藏
         setLoginShow(val) {
             this.loginShow = val
         },
+        // 获取登录状态
         getLoginStatus() {
             getLoginStatus().then( res => {
+                console.log(res)
+            })
+        },
+        // 退出登录
+        loginOut() {
+            loginOut().then( res => {
                 console.log(res)
             })
         },
@@ -89,6 +101,25 @@ export default {
         },
         handleClose () {
             this.visible = false
+        },
+        dropClick(name) {
+            switch (name) {
+                case '个人主页':
+                    this.getLoginStatus()
+                    break
+                case '退出登录':
+                    loginOut().then( res => {
+                        locs.remove('profile')
+                    })
+                    // 退出登录
+                    this.setLoginOut()
+                    // 获取未登录推荐歌单
+                    this.setPersonalized()
+                    break
+                default:
+                    break
+            }
+            console.log(name)
         }
     }
 }
@@ -100,6 +131,7 @@ export default {
     position: relative;
     padding: 10px 20px;
     height: 100%;
+    z-index: 3;
     .logo{
         position: absolute;
         cursor: pointer;

@@ -32,15 +32,23 @@ export default {
     watch: {
         playlistSet(newVal, oldVal) {
             // 设置创建的歌单
-            newVal.forEach(ele => {
-                this.menu[2].children = [...this.menu[2].children, ele]
-            })
+            if (newVal.length != 0) {
+                newVal.forEach(ele => {
+                    this.menu[2].children = [...this.menu[2].children, ele]
+                })
+            } else {
+                this.menu[2].children = []
+            }
         },
         playlistCollect(newVal, oldVal) {
             // 设置收藏的歌单
-            newVal.forEach(ele => {
-                this.menu[3].children = [...this.menu[3].children, ele]
-            })
+            if (newVal.length != 0) {
+                newVal.forEach(ele => {
+                    this.menu[3].children = [...this.menu[3].children, ele]
+                })
+            } else {
+                this.menu[3].children = []
+            }
         }
     },
     computed: {

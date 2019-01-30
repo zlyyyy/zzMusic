@@ -45,6 +45,13 @@ export default new Router({
             },
             children: [
                 {
+                    path: 'song',
+                    component: () => import('../pages/song/song'),
+                    meta: {
+                        title: '单曲'
+                    }
+                },
+                {
                     path: 'search',
                     component: () => import('../pages/search/search'),
                     meta: {

@@ -1,4 +1,4 @@
-// 我的电台列表
+// 订阅电台列表
 
 module.exports = (query, request) => {
     const data = {
@@ -7,7 +7,7 @@ module.exports = (query, request) => {
         total: true
     }
     return request(
-        'POST', `http://music.163.com/weapi/djradio/get/subed`, data,
+        'POST', `https://music.163.com/weapi/djradio/get/subed`, data,
         {crypto: 'weapi', cookie: query.cookie, proxy: query.proxy}
     )
 }

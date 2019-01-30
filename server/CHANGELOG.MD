@@ -1,60 +1,119 @@
 # 更新日志
+### 3.4.0 | 2019.01.29
+- 增加已收藏专辑列表接口
+
+### 3.3.0 | 2019.01.27
+- 增加视频标签下的视频获取接口
+
+- 增加 pac 代理支持
+
+### 3.2.0 | 2019.01.19
+- 增加获取首页新碟上架数据以及更新听歌排行
+
+- 更新搜索建议接口
+
+### 3.1.0 | 2019.01.06
+- 修复评论接口返回 460 Cheating 的问题
+
+- 新增`已收藏MV`接口,更新文档
+
+### 3.0.9 | 2018.12.15
+- 修复关注异常的问题 #399
+
+### 3.0.8 | 2018.12.12
+- 更新文档 #386 #394
+
+- 优化电台节目接口
+
+### 3.0.7 | 2018.11.21
+- 修复歌单详情列表,排行榜,所有榜单失效的问题,更新文档 #380 #381
+
+### 3.0.4 | 2018.11.15
+- 修复 `/song/url` 接口无法返回多个音乐数据的问题
+
+### 3.0.3 | 2018.11.09
+- 修复取消喜欢歌曲失败问题 [#360](https://github.com/Binaryify/NeteaseCloudMusicApi/issues/360)
+
+- 补充已喜欢音乐列表接口说明文档 [#370](https://github.com/Binaryify/NeteaseCloudMusicApi/issues/370)
+
+- 默认关闭 debug 模式 [#365](https://github.com/Binaryify/NeteaseCloudMusicApi/pull/365)
+
+- 更新 Dockerfile 文件 [#367](https://github.com/Binaryify/NeteaseCloudMusicApi/pull/367)
+
+
+### 3.0.1 | 2018.10.21
+
+- 合并 PR([#351](https://github.com/Binaryify/NeteaseCloudMusicApi/pull/351))
+
+- 文档增加 `/top/song` 接口
+
+- `/banner` 换成 linux api，返回结构有所变动
+
+- `/check/music` 已知 bug 修复
+
 ### 3.0.0 | 2018.10.14
 
-## 整体
+#### 整体
+
 - 完善文档,增加之前没写进文档的接口说明
 
 - 重写 createRequest 返回 Promise 对象
 
 - 模块化路由
 
-- 模块化, 剥离res,req, 方便导出调用
+- 模块化, 剥离 res,req, 方便导出调用
 
-- 增加 cookie-parser 
+- 增加 cookie-parser
 
+##### 参数修改
 
-### 参数修改
-- `/song/detail` 增加多id支持  
+- `/song/detail` 增加多 id 支持
 
-- `/toplist/detail` 移除参数  
+- `/toplist/detail` 移除参数
 
-- `/resource/like` 增加参数 `type`  
+- `/resource/like` 增加参数 `type`
 
 - `/top/playlist/highquality` 增加分页参数 `before`
 
-### 统一参数
+##### 统一参数
+
 - `/artist/sub` 与 `artist/unsub` 合并, 用`query.t`
 
 - `/follow` 中 `query.type` 换成 `query.t`
 
 - `/comment` 中 `query.action` 换成 `query.t`
 
-### URL重命名
-- `/video` 改为 `video/url` 
+##### URL 重命名
+
+- `/video` 改为 `video/url`
 
 - `/mv` 改为 `mv/detail`
 
 - `/music/url` 改为 `/song/url`
 
-### 转发逻辑修改
+##### 转发逻辑修改
+
 - `/toplist/artist` 换成 weapi
 
 - `/mv/url` 去除了 pipe
 
-### BUG修复
+##### BUG 修复
+
 - `/playlist/create`, `/playlist/update` 被判欺骗,增加 cookie
 
-### 路由增删
-- 删除 `/recommend/dislike` 
+##### 路由增删
 
-- 增加 `/video/sub` (收藏视频), `/mv/sub` (收藏MV)
+- 删除 `/recommend/dislike`
+
+- 增加 `/video/sub` (收藏视频), `/mv/sub` (收藏 MV)
 
 - 增加 `/video/detail` (视频详情)
 
 - 增加 `/related/allvideo` (相关视频)
 
 ### 2.20.5 | 2018.09.29
-修复非法参数403 #335, 修复代理错误 #334
+
+修复非法参数 403 #335, 修复代理错误 #334
 
 ### 2.20.4 | 2018.09.27
 
