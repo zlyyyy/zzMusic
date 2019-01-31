@@ -1,21 +1,28 @@
-# zz-music
+# zzMusic音乐播放器
 
-> A Vue.js project
+> 基于vue开发的音乐播放器，接口为[NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)真实数据接口
 
-## Build Setup
+## 如何安装与使用
 
-``` bash
-# install dependencies
-npm install
 
-# serve with hot reload at localhost:8080
-npm run dev
+```
+git clone git@github.com:zlyyyy/zzMusic.git  //下载项目
 
-# build for production with minification
-npm run build
+cd zzMusic //进入zzMusic目录
 
-# build for production and view the bundle analyzer report
-npm run build --report
+npm install //安装依赖
+
+npm start //服务端运行
+
+npm run build  //项目打包
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## 技术栈
+
+- Vue-Cli（Vue 脚手架工具）
+- Vue（核心框架）
+- Vue-Router（页面路由）
+- Vuex（状态管理）
+- ES 6 / 7 （JavaScript 语言的下一代标准）
+- Sass（CSS预处理器）
+- Axios（网络请求）
