@@ -207,7 +207,9 @@ export default {
 									id: ele.al.id,
 									name: ele.al.name,
 									picUrl: ele.al.picUrl
-								},
+                                },
+                                fee: ele.fee,
+                                copyright: ele.copyright,
 								duration: ele.dt
 							}
 							_data = [..._data, _ele]

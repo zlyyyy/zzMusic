@@ -4,10 +4,10 @@
             class="search-select-dropdown"
             v-model="keywords"
             icon="ios-search"
-            @on-enter="searchMusic"
             @on-focus="getHots"
             @on-select="searchMusic"
-            @on-change="changeGetSearchMusic"
+            @on-change="getSearchSuggest"
+            @keyup.enter.native="getSearchMusic"
             placeholder="搜索音乐、视频、歌词、电台"
             style="width:300px"
             element-id="searchV"
@@ -28,6 +28,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
+import { debounce } from '../../utils/utils'
 
 export default {
     watch: {
@@ -68,12 +69,12 @@ export default {
             'setSearchHot',
             'setSearchSuggest'
         ]),
-        // 动态搜索
-        changeGetSearchMusic(keywords) {
-            // 实时获取搜索建议
-            this.setSearchSuggest(keywords)
-            // 实时获取搜索结果
-            this.searchMusic(keywords)
+        getSearchSuggest(keywords) {
+            debounce(this.setSearchSuggest(keywords), 500)
+        },
+        getSearchMusic() {
+            // 获取搜索结果
+            this.searchMusic(this.keywords)
         },
         // 字符串高亮匹配
         keywordsHighlight(str) {
@@ -95,7 +96,6 @@ export default {
         // 建议跳转
         searchMusic(val) {
             let _val = val.replace('<em>', '').replace('</em>', '')
-            console.log(_val)
             this.$router.push( {path: '/music/search', query: { keywords: _val }} )
         }
     }

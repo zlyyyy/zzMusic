@@ -7,7 +7,7 @@
 		</ul>
 		<ul class="zz-table-list">
 			<li v-for="(item, index) in data" :key="index" :class="{ 'all-list': item.lyrics }" @dblclick="setSelectMusicInfor(item)">
-				<div class="zz-table-list-item" :class="{ all: item.lyrics }">
+				<div class="zz-table-list-item" :class="[{ all: item.lyrics }, {noCop: item.fee == 0}]">
 					<span class="number">{{ index | numberFormat }}</span>
 					<span class="handle">
 						<i class="iconfont icon-like"></i>
@@ -149,7 +149,11 @@ export default {
 		},
 		// 播放音乐
 		setSelectMusicInfor(item) {
-			this.$emit('setSelectMusicInfor', item)
+            if (item.fee != 0) {
+                this.$emit('setSelectMusicInfor', item)
+            } else {
+                this.$Message.warning('暂无资源版权')
+            }
 		}
     }
 }
@@ -221,6 +225,11 @@ export default {
 						color: $main;
 					}
 				}
+                &.noCop{
+                    span:nth-child(3){
+                        color: $font_fourth;
+                    }
+                }
 			}
 			&.all-list{
 				cursor: auto;

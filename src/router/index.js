@@ -11,39 +11,39 @@ export default new Router({
             redirect: '/discover'
         },
         {
-            path: '/discover',
-            component: () => import('../pages/music'),
-            redirect: '/discover/index',
-            meta: {
-                title: 'ZZ-music',
-                keepAlive: true
-            },
-            children: [
-                {
-                    path: 'index',
-                    component: () => import('../pages/discover/index/index'),
-                    meta: {
-                        title: '推荐'
-                    }
-                },
-                {
-                    path: 'recommend/taste',
-                    component: () => import('../pages/discover/everyday/everyday'),
-                    meta: {
-                        title: '每日推荐'
-                    }
-                }
-            ]
-        },
-        {
             path: '/music',
             component: () => import('../pages/music'),
-            redirect: '/discover/index',
+            redirect: '/music/discover/index',
             meta: {
                 title: 'ZZ-music',
                 keepAlive: true
             },
             children: [
+                {
+                    path: 'discover',
+                    component: () => import('@/pages/discover/discover'),
+                    redirect: '/discover/index',
+                    meta: {
+                        title: 'ZZ-music',
+                        keepAlive: true
+                    },
+                    children: [
+                        {
+                            path: 'index',
+                            component: () => import('@/pages/discover/index/index'),
+                            meta: {
+                                title: '推荐'
+                            }
+                        },
+                        {
+                            path: 'recommend/taste',
+                            component: () => import('@/pages/discover/everyday/everyday'),
+                            meta: {
+                                title: '每日推荐'
+                            }
+                        }
+                    ]
+                },
                 {
                     path: 'song',
                     component: () => import('../pages/song/song'),

@@ -1,9 +1,10 @@
 <template>
     <div class="home">
 		<div class="module slide">
-			<Carousel autoplay loop>
+			<Carousel autoplay loop >
 				<CarouselItem v-for="item in banner" :key="item.index">
-					<div class="item-carousel" :style="{'background-image':'url('+item.backgroundUrl+')'}" >
+					<!-- <div class="item-carousel" :style="{'background-image':'url('+item.backgroundUrl+')'}" > -->
+                    <div class="item-carousel">
 						<a :href="item.url">
 							<img :src="item.picUrl" />
 						</a>
@@ -17,6 +18,7 @@
 				<zz-imglist>
 					<template slot="content">
 						<router-link
+                            v-if="loginStatus"
 							tag="li"
 							class="img songs"
 							:to="{path: '/discover/recommend/taste'}"
@@ -30,10 +32,10 @@
 								每日歌曲推荐
 							</a>
 						</router-link>
-						<li class="img songs" v-for="(item, index) in recData" v-if="index<4" :key="index">
+						<li class="img songs" v-for="(item, index) in recData" v-if="index < listNumber" :key="index">
 							<div class="cover">
 								<img :src="item.picUrl" />
-								<p class="msk-1">{{ '播放数:' + numFormat(item.playcount) }}</p>
+								<p class="msk-1">{{ '播放数:' + numFormat(item.playCount) }}</p>
 								<p class="copywriter">{{ item.copywriter }}</p>
 								<router-link
 									class="link"
@@ -98,7 +100,10 @@ export default {
 		},
 		weekDay() {
 			return weekDay()
-		}
+        },
+        listNumber() {
+            return this.loginStatus ? 4 : 10
+        }
 	},
 	data() {
 		return {}
@@ -128,7 +133,7 @@ export default {
 		margin-bottom: 10px;
 		&.slide{
 			.item-carousel{
-				text-align: center
+				text-align: center;
 			}
 		}
 		.title{

@@ -70,7 +70,7 @@ export default {
                         {
                             name: '发现音乐',
                             icon: 'icon-music',
-                            path: '/discover/index'
+                            path: '/music/discover/index'
                         },
                         {
                             name: '私人FM',

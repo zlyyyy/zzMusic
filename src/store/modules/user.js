@@ -60,7 +60,7 @@ const actions = {
                     nickname: ele.creator.nickname,
                     userId: ele.creator.userId,
                     trackCount: ele.trackCount,
-                    playcount: ele.playcount
+                    playCount: ele.playcount
                 }
                 _data = [..._data, _ele]
             })

@@ -5,7 +5,16 @@ import { getBanner, getPersonalized } from '../api'
 // 轮播图
 export const setBanner = function( {commit} ) {
     getBanner().then( res => {
-        commit( types.SET_BANNER, res.banners )
+        let _data = []
+        res.banners.forEach(ele => {
+            const _ele = {
+                picUrl: ele.imageUrl,
+                titleColor: ele.titleColor,
+                typeTitle: ele.typeTitle
+            }
+            _data = [..._data, _ele]
+        })
+        commit( types.SET_BANNER, _data )
     })
 }
 // 推荐歌单
