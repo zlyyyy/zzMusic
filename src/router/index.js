@@ -8,7 +8,7 @@ export default new Router({
     routes: [
         {
             path: '/',
-            redirect: '/discover'
+            redirect: '/music'
         },
         {
             path: '/music',
