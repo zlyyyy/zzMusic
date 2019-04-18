@@ -55,8 +55,8 @@
 </template>
 
 <script>
-import zzImglist from '../../../components/zzImglist/zzImglist'
-import { day, weekDay } from '../../../utils/utils'
+import zzImglist from '@/components/zzImglist/zzImglist'
+import { day, weekDay, numFormat } from '@/utils/utils'
 import { mapGetters, mapState, mapActions } from 'vuex'
 
 export default {
@@ -118,7 +118,7 @@ export default {
 		]),
 		// 数量转换
 		numFormat(num) {
-            return num > 1e5 ? (Math.floor(num / 1e4) + '万') : num
+            return numFormat(num)
 		}
 	}
 }

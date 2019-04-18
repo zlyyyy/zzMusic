@@ -86,6 +86,10 @@ function debounce(method, delay) {
         }, delay)
     }
 }
+// 数量转换
+function numFormat(num) {
+    return num > 1e5 ? (Math.floor(num / 1e4) + '万') : num
+}
 
 export {
     timeChange,
@@ -93,5 +97,6 @@ export {
     weekDay,
     createCanvas,
     parseLyric,
-    debounce
+    debounce,
+    numFormat
 }

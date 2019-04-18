@@ -99,3 +99,17 @@ export function getPlaylistDetail(id) {
         }
     })
 }
+//  获取歌单分类
+export function getPlaylistCatlist() {
+    return http.get('/playlist/catlist')
+}
+//  获取热门歌单分类
+export function getPlaylistHot() {
+    return http.get('/playlist/hot')
+}
+//  获取歌单 ( 网友精选碟 )
+export function getTopPlaylist(params) {
+    return http.get('/top/playlist', {
+        params
+    })
+}

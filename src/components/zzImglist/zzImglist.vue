@@ -52,7 +52,14 @@ export default {
 					height: 20px;
 					line-height: 20px;
 					@include sc(12px, $white);
-					text-shadow: -2px 1px rgba(0,0,0,.4);
+                    text-shadow: -2px 1px rgba(0,0,0,.4);
+                    &.author{
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                        padding-left: 5px;
+                        text-shadow: none;
+                    }
 				}
 				.msk-1{
 					position: absolute;
