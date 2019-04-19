@@ -113,3 +113,14 @@ export function getTopPlaylist(params) {
         params
     })
 }
+
+//  获取电台 - 分类
+export function getDjCatelist() {
+    return http.get('/dj/catelist')
+}
+//  获取电台 - 分类推荐
+export function getDjCatelistType(params) {
+    return http.get('/dj/recommend/type', {
+        params
+    })
+}

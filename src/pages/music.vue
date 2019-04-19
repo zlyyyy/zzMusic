@@ -185,6 +185,7 @@ export default {
         .main-content{
             height: 100%;
             overflow-y: auto;
+            overflow-x: hidden;
             padding: 20px;
             flex: 1;
             .btns{

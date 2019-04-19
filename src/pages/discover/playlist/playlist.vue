@@ -55,7 +55,7 @@
                 class="hot-tag-item"
                 v-for="(item, index) in playlistHot"
                 :key="`${item.name}${index}`"
-                @click="searchTagPlaylist(tag)"
+                @click="searchTagPlaylist(item)"
                 >
                 {{item.name}}
             </div>
