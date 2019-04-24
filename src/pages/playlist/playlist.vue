@@ -101,10 +101,10 @@ export default {
 					title: '序号',
 					class: 'number'
 				},
-				{
-					title: '操作',
-					class: 'handle'
-				},
+				// {
+				// 	title: '操作',
+				// 	class: 'handle'
+				// },
 				{
 					title: '音乐标题'
 				},

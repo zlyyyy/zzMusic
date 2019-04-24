@@ -9,9 +9,9 @@
 			<li v-for="(item, index) in data" :key="index" :class="{ 'all-list': item.lyrics }" @dblclick="setSelectMusicInfor(item)">
 				<div class="zz-table-list-item" :class="[{ all: item.lyrics }, {noCop: item.fee == 0}]">
 					<span class="number">{{ index | numberFormat }}</span>
-					<span class="handle">
+					<!-- <span class="handle">
 						<i class="iconfont icon-like"></i>
-					</span>
+					</span> -->
 					<span v-html="keywordsHighlight(item.name)"></span>
 					<span>{{ item.artists | artistsFormat }}</span>
 					<span v-html="keywordsHighlight(item.album.name)"></span>

@@ -21,9 +21,9 @@
                             v-if="loginStatus"
 							tag="li"
 							class="img songs"
-							:to="{path: '/discover/recommend/taste'}"
+							:to="{path: '/music/discover/recommend/taste'}"
 							>
-							<a href="/discover/recommend/taste" title="每日歌曲推荐" class="date">
+							<a href="'/music/discover/recommend/taste" title="每日歌曲推荐" class="date">
 								<span class="head">{{ '星期' + weekDay }}</span>
 								<span class="bd">{{ day }}</span>
 								<!-- <span class="mask"></span> -->

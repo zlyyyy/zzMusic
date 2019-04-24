@@ -1,6 +1,6 @@
 <template>
     <div class="discover">
-        <div class="subnav" v-if="routePath!='recommend/taste'">
+        <div class="subnav" v-if="routePath!='/music/discover/recommend/taste'">
             <router-link
                 v-for="item in subnav"
                 :key="item.name"

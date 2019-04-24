@@ -1,7 +1,7 @@
 <template>
     <div class="djradio">
         <div class="dj-catelis">
-            <div class="dj-catelis-content" :style="{left: catelisLeft+'px'}">
+            <div ref="djCatelisContent" class="dj-catelis-content" :style="{left: catelisLeft+'px'}">
                 <div
                     class="dj-catelis-item"
                     v-for="(item, index) in djCatelist"
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { getDjCatelist, getDjCatelistType } from '@/api'
+import { getDjCatelist, getDjRecommendType } from '@/api'
 
 export default {
 	props: {
@@ -54,6 +54,9 @@ export default {
 	components: {
 	},
 	computed: {
+        djCatelisContentWidth() {
+            return this.$refs.djCatelisContent.offsetWidth
+        }
 	},
 	data() {
 		return {
@@ -72,17 +75,15 @@ export default {
             }
         },
         catelisBtnRight() {
-            if (this.catelisLeft * -1 >= this.screenWidth || this.catelisLeft == 0) {
-                if (this.catelisLeft * -1 != this.screenWidth * 2) {
-                    this.catelisLeft -= this.screenWidth
-                }
+            if (this.catelisLeft * -1 < this.djCatelisContentWidth - this.screenWidth) {
+                this.catelisLeft -= this.screenWidth
             }
         },
         setDjCatelistData() {
             const params = {
                 type: this.djCatelist[this.djCatelistCurrent].id
             }
-            getDjCatelistType(params).then(res => {
+            getDjRecommendType(params).then(res => {
                 console.log(res)
             })
         }

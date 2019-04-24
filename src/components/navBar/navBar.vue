@@ -9,7 +9,7 @@
                     class="menu-item"
                     :to="{path: option.path}"
                     tag="div"
-                    :class="{'active': locationUrl.indexOf(option.path) != -1}"
+                    :class="{'active': locationUrl.indexOf(`/${option.path.split('/')[1]}/${option.path.split('/')[2]}`) != -1}"
                 >
                     <i class="iconfont" :class="option.icon"></i>
                     {{ option.name }}
@@ -70,7 +70,7 @@ export default {
                         {
                             name: '发现音乐',
                             icon: 'icon-music',
-                            path: '/music/discover'
+                            path: '/music/discover/index'
                         },
                         {
                             name: '私人FM',
