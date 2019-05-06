@@ -124,3 +124,14 @@ export function getDjRecommendType(params) {
         params
     })
 }
+
+//  获取所有榜单
+export function getToplist() {
+    return http.get('/toplist')
+}
+//  获取所有榜单
+export function getTopListData(params) {
+    return http.get('/top/list', {
+        params
+    })
+}

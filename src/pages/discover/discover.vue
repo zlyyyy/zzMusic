@@ -43,10 +43,10 @@ export default {
                     name: '歌单',
                     path: '/music/discover/playlist'
                 },
-                {
-                    name: '主播电台',
-                    path: '/music/discover/djradio'
-                },
+                // {
+                //     name: '主播电台',
+                //     path: '/music/discover/djradio'
+                // },
                 {
                     name: '排行榜',
                     path: '/music/discover/toplist'

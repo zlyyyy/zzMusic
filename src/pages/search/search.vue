@@ -120,7 +120,6 @@
 import zzTable from '../../components/zzTable/zzTable'
 import zzTablelist from '../../components/zzTablelist/zzTablelist'
 import zzImglist from '../../components/zzImglist/zzImglist'
-import zzLoading from '../../components/zzLoading/zzLoading'
 import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
@@ -139,8 +138,7 @@ export default {
 	components: {
 		zzTable,
 		zzTablelist,
-		zzImglist,
-		zzLoading
+		zzImglist
 	},
 	computed: {
 		...mapState('search', [

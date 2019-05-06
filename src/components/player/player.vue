@@ -12,7 +12,7 @@
                 <img :src="musicInfor.image" />
             </router-link>
             <div class="music-name">
-                <i class="iconfont icon-like like"></i>
+                <!-- <i class="iconfont icon-like like"></i> -->
                 <div class="info">
                     <span class="name" :title="musicInfor.name">{{ musicInfor.name }}</span>
                     <span class="author">{{ musicInfor.singer | artistsFormat }}</span>

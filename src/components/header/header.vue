@@ -1,7 +1,7 @@
 <template>
     <div class="z-head">
         <router-link :to="{path:'/'}" tag="div" class="logo">
-            ZZ-MUSIC
+            <img src="../../assets/logo.png"/>
         </router-link>
         <div class="page">
             <div class="button page-back">
@@ -52,6 +52,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
     created() {
         // this.setMusicInfor('32102855')
+        console.log(this.$router)
     },
     components: {
         SearchInput,
@@ -64,7 +65,10 @@ export default {
             user: state => state,
             loginStatus: state => state.loginStatus,
             profile: state => state.profile
-        })
+        }),
+        historyLength() {
+            return this.$router
+        }
     },
     data() {
         return {
@@ -137,6 +141,11 @@ export default {
         cursor: pointer;
         @include sc(24px, $white);
         margin-right: 30px;
+        margin-top: 5px;
+        height: 30px;
+        img{
+            height: 100%;
+        }
     }
     .page{
         position: absolute;

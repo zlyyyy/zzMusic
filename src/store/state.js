@@ -5,7 +5,11 @@ const state = {
         audio: null,
         playing: false,
         currentTime: 0,
-        musicInfor: [],
+        musicInfor: {
+            duration: 0,
+            name: '欢迎使用zzMusic',
+            image: require('../assets/zzmusic.png')
+        },
         playlist: [],
         historyList: []
     }

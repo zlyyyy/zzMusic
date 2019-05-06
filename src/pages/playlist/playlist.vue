@@ -66,7 +66,6 @@
 
 <script>
 import zzTable from '../../components/zzTable/zzTable'
-import zzLoading from '../../components/zzLoading/zzLoading'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -77,8 +76,7 @@ export default {
 		})
 	},
 	components: {
-		zzTable,
-		zzLoading
+		zzTable
 	},
 	computed: {
 		...mapState('playlist', [
