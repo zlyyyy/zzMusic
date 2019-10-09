@@ -9,10 +9,10 @@
           class="toplist-menu-official-content-item"
           v-for="(item, index) in toplist.filter((ele, index) => index < 4)"
           :key="`${item.name}${index}`"
-        >
+          >
           <div class="toplist-menu-official-content-item-infor">
             <div class="img">
-              <img :src="item.coverImgUrl" />
+              <img v-lazy="item.coverImgUrl" />
             </div>
             <div class="update-text">
               {{ item.updateTime | timeFormatterMD }}
@@ -39,6 +39,7 @@
             >
               查看全部 >
             </router-link>
+            <zz-loading v-if="listLoading"></zz-loading>
           </div>
         </div>
       </div>
@@ -59,7 +60,7 @@
             tag="div"
           >
             <div class="img">
-              <img :src="item.coverImgUrl" />
+              <img v-lazy="item.coverImgUrl" />
             </div>
             <div class="name">{{ item.name }}</div>
           </router-link>
@@ -108,7 +109,7 @@ export default {
             };
             getTopListData(params).then(_res => {
               let _eleData = [];
-              _res.playlist.tracks.forEach(trackEle => {
+              _res.playlist.tracks.forEach((trackEle, traind) => {
                 let _artists = [];
                 // 歌手数据筛选
                 trackEle.ar.forEach(arEle => {
@@ -130,13 +131,14 @@ export default {
                   },
                   fee: trackEle.fee,
                   duration: trackEle.dt,
-                  ratio: _res.playlist.trackIds[index].ratio
-                    ? `${_res.playlist.trackIds[index].ratio}%`
+                  ratio: _res.playlist.trackIds[traind].ratio
+                    ? `${_res.playlist.trackIds[traind].ratio}%`
                     : "-"
                 };
                 _eleData = [..._eleData, _trackEle];
               });
               _ele.data = _eleData;
+              this.listLoading = false
             });
           }
           _data = [..._data, _ele];
@@ -176,6 +178,7 @@ export default {
   data() {
     return {
       loading: true,
+      listLoading: true,
       toplist: []
     };
   },
@@ -265,6 +268,7 @@ export default {
         }
       }
       .toplist-menu-official-content-item-content {
+        position: relative;
         display: inline-block;
         width: calc(100% - 220px);
         vertical-align: top;
