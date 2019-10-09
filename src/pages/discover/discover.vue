@@ -46,14 +46,14 @@ export default {
           name: "排行榜",
           path: "/music/discover/toplist"
         },
-        {
-          name: "歌手",
-          path: "/music/discover/artist"
-        },
-        {
-          name: "最新音乐",
-          path: "/music/discover/song"
-        }
+        // {
+        //   name: "歌手",
+        //   path: "/music/discover/artist"
+        // },
+        // {
+        //   name: "最新音乐",
+        //   path: "/music/discover/song"
+        // }
       ]
     };
   },

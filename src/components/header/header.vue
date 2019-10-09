@@ -33,10 +33,10 @@
             <Icon class="arrow-down" type="ios-arrow-down"></Icon>
           </a>
           <DropdownMenu slot="list" class="infor">
-            <DropdownItem name="个人主页">
+            <!-- <DropdownItem name="个人主页">
               <Icon type="md-person" />
               <span>个人主页</span>
-            </DropdownItem>
+            </DropdownItem> -->
             <DropdownItem name="退出登录">
               <Icon type="md-power" />
               <span>退出登录</span>

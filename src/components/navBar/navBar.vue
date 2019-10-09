@@ -87,11 +87,11 @@ export default {
         {
           title: "我的音乐",
           children: [
-            {
-              name: "我的电台",
-              icon: "icon-music",
-              path: "/my/radio"
-            }
+            // {
+            //   name: "我的电台",
+            //   icon: "icon-music",
+            //   path: "/my/radio"
+            // }
           ]
         },
         {
