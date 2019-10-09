@@ -46,7 +46,7 @@
               :key="index"
             >
               <div class="cover">
-                <img :src="item.picUrl" />
+                <img v-lazy="item.picUrl" />
                 <p class="msk-1">{{ "播放数:" + numFormat(item.playCount) }}</p>
                 <p class="copywriter">{{ item.copywriter }}</p>
                 <router-link

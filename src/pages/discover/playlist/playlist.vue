@@ -71,7 +71,7 @@
           :key="`${item.picUrl}${index}`"
         >
           <div class="cover">
-            <img :src="item.coverImgUrl" />
+            <img v-lazy="item.coverImgUrl" />
             <p class="msk-1">{{ "播放数:" + numFormat(item.playCount) }}</p>
             <p class="author">{{ `by ${item.nickname}` }}</p>
             <router-link

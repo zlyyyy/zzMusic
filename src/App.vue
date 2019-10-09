@@ -20,7 +20,9 @@ export default {
 <style lang="scss">
 @import "./style/common";
 #app {
+  position: relative;
   height: 100%;
+  max-width: 1100px;
   overflow: hidden;
 }
 #music {

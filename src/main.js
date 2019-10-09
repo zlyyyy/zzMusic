@@ -5,12 +5,19 @@ import App from "./App";
 import router from "./router";
 import store from "./store/index";
 import axios from "./utils/http";
+import VueLazyload from "vue-lazyload";
 import zzLoading from "@/components/zzLoading/zzLoading";
 
 Vue.http = Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
 
 Vue.component(zzLoading.name, zzLoading);
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  error: require("../src/assets/zzmusic.png"),
+  loading: require("../src/assets/zzmusic.png"),
+  attempt: 1
+});
 
 router.beforeEach((to, from, next) => {
   /* 路由发生变化修改页面title */
