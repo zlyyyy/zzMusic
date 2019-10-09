@@ -1,25 +1,28 @@
 <template>
   <div class="song">
     <div class="infor">
-      <div class="cd">
-        <img :src="musicInfor.image" />
-      </div>
-      <div class="des-infor">
-        <h1 class="name">{{ musicInfor.name }}</h1>
-        <div class="album">专辑：{{ musicInfor.album }}</div>
-        <div class="singer">歌手：{{ musicInfor.singer | artistsFormat }}</div>
-        <div class="lyric-content">
-          <div class="lyric" :style="lyricTop">
-            <p
-              v-for="(item, index) in lyric"
-              :class="{ on: index == lyricIndex }"
-              :key="item.index"
-            >
-              {{ item.text }}
-            </p>
+      <template v-if="songId">
+        <div class="cd">
+          <img :src="musicInfor.image" />
+        </div>
+        <div class="des-infor">
+          <h1 class="name">{{ musicInfor.name }}</h1>
+          <div class="album">专辑：{{ musicInfor.album }}</div>
+          <div class="singer">歌手：{{ musicInfor.singer | artistsFormat }}</div>
+          <div class="lyric-content">
+            <div class="lyric" :style="lyricTop">
+              <p
+                v-for="(item, index) in lyric"
+                :class="{ on: index == lyricIndex }"
+                :key="item.index"
+              >
+                {{ item.text }}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      </template>
+      <h1 class="no-song-text" v-else>暂无正在播放的音乐，快去播放喜欢的音乐吧！</h1>
     </div>
   </div>
 </template>
@@ -33,7 +36,7 @@ export default {
   created() {
     this.$nextTick(() => {
       // 获取歌词
-      this.setMusicLyric(this.songId);
+      this.songId&&this.setMusicLyric(this.songId);
     });
   },
   components: {},
@@ -56,7 +59,7 @@ export default {
     ...mapGetters(["currentTime", "musicInfor"]),
     songId() {
       // 动态展示地址栏查询type
-      return this.$route.query.id;
+      return this.musicInfor&&this.musicInfor.id? this.$route.query.id : null
     },
     lyricTop() {
       return `transform :translate3d(0, ${-26 *
@@ -195,6 +198,13 @@ export default {
   overflow: hidden;
   .infor {
     overflow: hidden;
+    .no-song-text {
+      margin-top: calc(50% - 140px);
+      width: 100%;
+      @include sc(20px, $white);
+      font-weight: bolder;
+      text-align: center;
+    }
     .cd {
       float: left;
       width: 298px;

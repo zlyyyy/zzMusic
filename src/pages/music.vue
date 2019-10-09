@@ -206,19 +206,19 @@ export default {
           border: 1px solid $main;
           border-radius: 3px;
           cursor: pointer;
-          @include wh(120px, 30px);
+          @include wh(130px, 30px);
           .i-play {
             position: relative;
             display: block;
             float: left;
-            @include wh(20px, 20px);
+            @include wh(21px, 21px);
             border-radius: 50%;
             border: 1px solid $main;
             margin: 4px 0 0 10px;
             i {
               position: absolute;
               left: 4px;
-              top: 1px;
+              top: 0px;
               @include sc(10px, $main);
             }
           }
@@ -237,7 +237,7 @@ export default {
             border-left: 1px solid $main;
             i {
               position: absolute;
-              top: 3px;
+              top: 2px;
               left: 7px;
               @include sc(16px, $main);
             }
