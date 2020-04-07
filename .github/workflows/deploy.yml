@@ -28,4 +28,4 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          script: cd ~ && sh zz-music.sh {{ secrets.DOCKER_USERNAME }} ${{ secrets.DOCKER_PASSWORD }}
+          script: cd ~ && sh zz-music-deploy.sh {{ secrets.DOCKER_USERNAME }} ${{ secrets.DOCKER_PASSWORD }}
