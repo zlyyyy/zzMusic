@@ -20,5 +20,5 @@ jobs:
         run: |
           docker login --username=${{ secrets.DOCKER_USERNAME }} registry.cn-hangzhou.aliyuncs.com --password=${{ secrets.DOCKER_PASSWORD }} # 登录docker，并使用Secret里配置的参数
           docker build -t zz-music:latest . #执行构建
-          docker tag zzMusic registry.cn-hangzhou.aliyuncs.com/zlyyyy/zz-music:latest
+          docker tag zz-music registry.cn-hangzhou.aliyuncs.com/zlyyyy/zz-music:latest
           docker push registry.cn-hangzhou.aliyuncs.com/zlyyyy/zz-music:latest # 推送
