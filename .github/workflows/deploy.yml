@@ -22,3 +22,10 @@ jobs:
           docker build -t zz-music:latest . #执行构建
           docker tag zz-music registry.cn-hangzhou.aliyuncs.com/zlyyyy/zz-music:latest
           docker push registry.cn-hangzhou.aliyuncs.com/zlyyyy/zz-music:latest # 推送
+      - name: ssh deploy 
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: cd ~ && mkdir test
