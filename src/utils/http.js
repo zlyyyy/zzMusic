@@ -5,7 +5,7 @@ import { Message } from "iview";
 const service = axios.create({
   //  withCredentials` 表示跨域请求时是否需要使用凭证
   withCredentials: true,
-  baseURL: "http://api.zhaoly.cn",
+  baseURL: "https://api.zhaoly.cn",
   timeout: 150000 // 请求超时时间
 });
 //  添加请求拦截器
